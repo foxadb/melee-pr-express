@@ -12,18 +12,18 @@ exports.getPlayers = async function (query, page, limit) {
         var players = await Player.paginate(query, options);
         return players;
     } catch (e) {
-        throw Error('Error while Paginating Players');
+        throw Error('Error while paginating players');
     }
 };
 
 exports.getPlayer = async function (id) {
     try {
-        var player = await Player.paginate({ _id: id });
+        var player = await Player.findById(id);
         return player;
     } catch (e) {
-        throw Error('Error while Paginating Player');
+        throw Error('Error while paginating player');
     }
-}
+};
 
 exports.createPlayer = async function (player) {
     var newPlayer = new Player({
@@ -37,9 +37,9 @@ exports.createPlayer = async function (player) {
         var savedPlayer = await newPlayer.save();
         return savedPlayer;
     } catch (e) {
-        throw Error("Error while Creating Player");
+        throw Error("Error while creating player");
     }
-}
+};
 
 exports.updatePlayer = async function (player) {
     var id = player.id;
@@ -48,7 +48,7 @@ exports.updatePlayer = async function (player) {
         // Find the old Player Object by the Id
         var oldPlayer = await Player.findById(id);
     } catch (e) {
-        throw Error("Error occured while Finding the Player");
+        throw Error("Error occured while finding the player");
     }
 
     // If no old Player Object exists return false
@@ -66,27 +66,50 @@ exports.updatePlayer = async function (player) {
         var savedPlayer = await oldPlayer.save();
         return savedPlayer;
     } catch (e) {
-        throw Error("And Error occured while updating the Player");
+        throw Error("Error occured while updating the player");
     }
-}
-
-exports.addMatch = async function (match) {
-    try {
-        var player1 = await Player.findById(match.player1);
-        var player2 = await Player.findById(match.player2);
-    } catch (e) {
-        throw Error("Error occured while Finding Players");
-    }
-}
+};
 
 exports.deletePlayer = async function (id) {
     try {
         var deleted = await Player.remove({ _id: id });
         if (deleted.result.n === 0) {
-            throw Error("Player Could not be deleted")
+            throw Error("Player could not be deleted")
         }
         return deleted;
     } catch (e) {
-        throw Error("Error Occured while Deleting the Player");
+        throw Error("Error Occured while deleting the player");
+    }
+};
+
+exports.addMatch = async function (playerId, matchId) {
+    try {
+        // Find the player
+        var player = await Player.findById(playerId);
+        
+        // Push the new match to the list
+        player.matches.push(matchId);
+
+        // Save to the database
+        await player.save();
+        return player;
+    } catch (e) {
+        throw Error("Error occured while adding a player match");
+    }
+};
+
+exports.removeMatch = async function (playerId, matchId) {
+    try {
+        // Find the player
+        var player = await Player.findById(playerId);
+        
+        // Remove the match from the list
+        player.matches = player.matches.filter(match => match != matchId);
+
+        // Save to the database
+        await player.save();
+        return player;
+    } catch (e) {
+        throw Error("Error occured while removing a player match");
     }
 };

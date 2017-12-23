@@ -7,11 +7,11 @@ exports.getPlayers = async function (req, res, next) {
 
     try {
         var players = await PlayerService.getPlayers({}, page, limit);
-        return res.status(200).json({ status: 200, data: players, message: "Succesfully Players Received" });
+        return res.status(200).json({ status: 200, data: players, message: "Succesfully players received" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
-}
+};
 
 exports.getPlayer = async function (req, res, next) {
     // Player ID
@@ -19,11 +19,11 @@ exports.getPlayer = async function (req, res, next) {
 
     try {
         var player = await PlayerService.getPlayer(id);
-        return res.status(200).json({ status: 200, data: player, message: "Successfully Player Received" });
+        return res.status(200).json({ status: 200, data: player, message: "Successfully player received" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
-}
+};
 
 exports.createPlayer = async function (req, res, next) {
     var player = {
@@ -34,11 +34,11 @@ exports.createPlayer = async function (req, res, next) {
 
     try {
         var createdPlayer = await PlayerService.createPlayer(player);
-        return res.status(201).json({ status: 201, data: createdPlayer, message: "Succesfully Created Player" });
+        return res.status(201).json({ status: 201, data: createdPlayer, message: "Succesfully created player" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: "Player Creation was Unsuccesfull" });
+        return res.status(400).json({ status: 400, message: "Player creation was unsuccesfull" });
     }
-}
+};
 
 exports.updatePlayer = async function (req, res, next) {
     // Id is necessary for the update
@@ -57,20 +57,20 @@ exports.updatePlayer = async function (req, res, next) {
 
     try {
         var updatedPlayer = await PlayerService.updatePlayer(player);
-        return res.status(200).json({ status: 200, data: updatedPlayer, message: "Succesfully Updated Tod" });
+        return res.status(200).json({ status: 200, data: updatedPlayer, message: "Succesfully updated player" });
     } catch (e) {
         return res.status(400).json({ status: 400., message: e.message });
     }
-}
+};
 
 exports.removePlayer = async function (req, res, next) {
     // Player ID
     var id = req.params.id;
 
     try {
-        var deleted = await PlayerService.deletePlayer(id);
-        return res.status(204).json({ status: 204, message: "Succesfully Player Deleted" });
+        await PlayerService.deletePlayer(id);
+        return res.status(204).json({ status: 204, message: "Succesfully player deleted" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
-}
+};
