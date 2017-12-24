@@ -29,6 +29,7 @@ exports.createPlayer = async function (player) {
     var newPlayer = new Player({
         name: player.name,
         mains: player.mains,
+        location: player.location,
         score: player.score
     });
 
@@ -57,10 +58,11 @@ exports.updatePlayer = async function (player) {
     }
 
     // Edit the Player Object
-    oldPlayer.name = player.name;
-    oldPlayer.mains = player.mains;
-    oldPlayer.score = player.score;
-    oldPlayer.matches = player.matches;
+    oldPlayer.name = player.name || oldPlayer.name;
+    oldPlayer.mains = player.mains || oldPlayer.mains;
+    oldPlayer.location = player.location || oldPlayer.location;
+    oldPlayer.score = player.score || oldPlayer.score;
+    oldPlayer.matches = player.matches || oldPlayer.matches;
 
     try {
         var savedPlayer = await oldPlayer.save();

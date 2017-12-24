@@ -26,6 +26,7 @@ exports.getTournament = async function (id) {
 exports.createTournament = async function (tournament) {
     var newTournament = new Tournament({
         name: tournament.name,
+        location: tournament.location,
         organiser: tournament.organiser,
         date: tournament.date,
         matches: tournament.matches
@@ -56,10 +57,11 @@ exports.updateTournament = async function (tournament) {
     }
 
     // Edit the Tournament Object
-    oldTournament.name = tournament.name;
-    oldTournament.organiser = tournament.organiser;
-    oldTournament.date = tournament.date;
-    oldTournament.matches = tournament.matches;
+    oldTournament.name = tournament.name || oldTournament.name;
+    oldTournament.location = tournament.location || oldTournament.location;
+    oldTournament.organiser = tournament.organiser || oldTournament.organiser;
+    oldTournament.date = tournament.date || oldTournament.date;
+    oldTournament.matches = tournament.matches || oldTournament.matches;
 
     try {
         var savedTournament = await oldTournament.save();

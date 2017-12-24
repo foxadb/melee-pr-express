@@ -3,6 +3,7 @@ var mongoosePaginate = require('mongoose-paginate');
 
 var TournamentSchema = new mongoose.Schema({
     name: { type: String, maxlength: 48, required: true },
+    location: { type: String, maxlength: 24 },
     organiser: { type: String, maxlength: 24 },
     date: { type: Date, default: Date.now() },
     matches: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Tournament' } ]

@@ -29,6 +29,7 @@ exports.getTournament = async function (req, res, next) {
 exports.createTournament = async function (req, res, next) {
     var tournament = {
         name: req.body.name,
+        location: req.body.location,
         organiser: req.body.organiser,
         date: req.body.date,
         matches: req.body.matches
@@ -53,6 +54,7 @@ exports.updateTournament = async function (req, res, next) {
     var tournament = {
         id,
         name: req.body.name ? req.body.name : null,
+        location: req.body.location ? req.body.location : null,
         organiser: req.body.organiser ? req.body.organiser : null,
         matches: req.body.matches ? req.body.matches : null
     };

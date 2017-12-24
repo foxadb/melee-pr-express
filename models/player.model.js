@@ -5,6 +5,7 @@ var PlayerSchema = new mongoose.Schema({
     name: { type: String, maxlength: 24, required: true },
     mains: [ { type: String, maxlength: 8 } ],
     score: { type: Number, default: 1000 },
+    location: { type: String, maxlength: 24 },
     matches: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Match' } ]
 });
 
