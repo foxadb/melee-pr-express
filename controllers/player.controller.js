@@ -3,7 +3,7 @@ var PlayerService = require('../services/player.service');
 exports.getPlayers = async function (req, res, next) {
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value
     var page = req.query.page ? req.query.page : 1;
-    var limit = req.query.limit ? req.query.limit : 10;
+    var limit = req.query.limit ? req.query.limit : 30;
 
     try {
         var players = await PlayerService.getPlayers({}, page, limit);

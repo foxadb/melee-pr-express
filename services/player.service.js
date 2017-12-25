@@ -21,7 +21,7 @@ exports.getPlayer = async function (id) {
         var player = await Player.findById(id);
         return player;
     } catch (e) {
-        throw Error('Error while paginating player');
+        throw Error('Error while finding the player');
     }
 };
 

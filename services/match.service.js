@@ -16,7 +16,10 @@ exports.getMatches = async function (query, page, limit) {
 
 exports.getMatch = async function (id) {
     try {
-        var match = await Match.findById(id);
+        var match = await Match.findById(id)
+            .populate('player1', ['name', 'mains'])
+            .populate('player2', ['name', 'mains'])
+            .populate('tournament', ['name']);
         return match;
     } catch (e) {
         throw Error('Error while paginating match');
