@@ -7,7 +7,7 @@ exports.getPlayers = async function (req, res, next) {
 
     try {
         var players = await PlayerService.getPlayers({}, page, limit);
-        return res.status(200).json({ status: 200, data: players, message: "Succesfully players received" });
+        return res.status(200).json({ status: 200, data: players, message: "Successfully players received" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
@@ -35,9 +35,9 @@ exports.createPlayer = async function (req, res, next) {
 
     try {
         var createdPlayer = await PlayerService.createPlayer(player);
-        return res.status(201).json({ status: 201, data: createdPlayer, message: "Succesfully created player" });
+        return res.status(201).json({ status: 201, data: createdPlayer, message: "Successfully created player" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: "Player creation was unsuccesfull" });
+        return res.status(400).json({ status: 400, message: "Player creation was unsuccessfull" });
     }
 };
 
@@ -59,7 +59,7 @@ exports.updatePlayer = async function (req, res, next) {
 
     try {
         var updatedPlayer = await PlayerService.updatePlayer(player);
-        return res.status(200).json({ status: 200, data: updatedPlayer, message: "Succesfully updated player" });
+        return res.status(200).json({ status: 200, data: updatedPlayer, message: "Successfully updated player" });
     } catch (e) {
         return res.status(400).json({ status: 400., message: e.message });
     }
@@ -71,7 +71,7 @@ exports.removePlayer = async function (req, res, next) {
 
     try {
         await PlayerService.deletePlayer(id);
-        return res.status(204).json({ status: 204, message: "Succesfully player deleted" });
+        return res.status(204).json({ status: 204, message: "Successfully player deleted" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }

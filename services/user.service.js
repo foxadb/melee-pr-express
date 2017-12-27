@@ -1,14 +1,9 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 
-exports.getUsers = async function (query, page, limit) {
-    var options = {
-        page,
-        limit
-    };
-
+exports.getUsers = async function () {
     try {
-        var users = await User.paginate(query, options);
+        var users = await User.find().select({ username: 1});
         return users;
     } catch (e) {
         throw Error('Error while paginating users');
@@ -32,6 +27,23 @@ exports.register = async function (user) {
         var savedUser = await newUser.save();
         return savedUser;
     } catch (e) {
-        throw Error("Error while creating user");
+        throw Error("Error while register user");
+    }
+};
+
+exports.signIn = async function (user) {
+    try {
+        // Finding the user
+        var signedInUser = await User.findOne({ username: user.username });
+
+        if (signedInUser) {
+            // Testing password matching
+            var res = await signedInUser.comparePassword(user.password);
+            return res ? signedInUser : undefined;
+        } else {
+            return undefined;
+        }
+    } catch (e) {
+        throw Error("Error while signing in user");
     }
 };

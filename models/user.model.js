@@ -8,10 +8,13 @@ const UserSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 UserSchema.methods.comparePassword = async function (password) {
-    bcrypt.compare(password, this.password, function (err, res) {
+    try {
+        var res = await bcrypt.compare(password, this.password);
         return res;
-    });
-}
+    } catch (e) {
+        throw Error("Wrong password");
+    }
+};
 
 UserSchema.plugin(mongoosePaginate);
 const User = mongoose.model('User', UserSchema);

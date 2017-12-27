@@ -8,7 +8,7 @@ exports.getTournaments = async function (req, res, next) {
 
     try {
         var tournaments = await TournamentService.getTournaments({}, page, limit);
-        return res.status(200).json({ status: 200, data: tournaments, message: "Succesfully tournaments received" });
+        return res.status(200).json({ status: 200, data: tournaments, message: "Successfully tournaments received" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
@@ -37,9 +37,9 @@ exports.createTournament = async function (req, res, next) {
 
     try {
         var createdTournament = await TournamentService.createTournament(tournament);
-        return res.status(201).json({ status: 201, data: createdTournament, message: "Succesfully created tournament" });
+        return res.status(201).json({ status: 201, data: createdTournament, message: "Successfully created tournament" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: "Tournament creation was unsuccesfull" });
+        return res.status(400).json({ status: 400, message: "Tournament creation was unsuccessfull" });
     }
 };
 
@@ -61,7 +61,7 @@ exports.updateTournament = async function (req, res, next) {
 
     try {
         var updatedTournament = await TournamentService.updateTournament(tournament);
-        return res.status(200).json({ status: 200, data: updatedTournament, message: "Succesfully updated tournament" });
+        return res.status(200).json({ status: 200, data: updatedTournament, message: "Successfully updated tournament" });
     } catch (e) {
         return res.status(400).json({ status: 400., message: e.message });
     }
@@ -80,7 +80,7 @@ exports.removeTournament = async function (req, res, next) {
         });
 
         var deleted = await TournamentService.deleteTournament(tournamentId);
-        return res.status(204).json({ status: 204, message: "Succesfully tournament deleted" });
+        return res.status(204).json({ status: 204, message: "Successfully tournament deleted" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }

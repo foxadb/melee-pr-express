@@ -9,7 +9,7 @@ exports.getMatches = async function (req, res, next) {
 
     try {
         var matches = await MatchService.getMatches({}, page, limit);
-        return res.status(200).json({ status: 200, data: matches, message: "Succesfully matches received" });
+        return res.status(200).json({ status: 200, data: matches, message: "Successfully matches received" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
@@ -48,9 +48,9 @@ exports.createMatch = async function (req, res, next) {
             TournamentService.addMatch(createdMatch.tournament, createdMatch);
         }
 
-        return res.status(201).json({ status: 201, data: createdMatch, message: "Succesfully created match" });
+        return res.status(201).json({ status: 201, data: createdMatch, message: "Successfully created match" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: "Match creation was unsuccesfull" });
+        return res.status(400).json({ status: 400, message: "Match creation was unsuccessfull" });
     }
 };
 
@@ -73,7 +73,7 @@ exports.updateMatch = async function (req, res, next) {
 
     try {
         var updatedMatch = await MatchService.updateMatch(match);
-        return res.status(200).json({ status: 200, data: updatedMatch, message: "Succesfully updated match" });
+        return res.status(200).json({ status: 200, data: updatedMatch, message: "Successfully updated match" });
     } catch (e) {
         return res.status(400).json({ status: 400., message: e.message });
     }
@@ -96,7 +96,7 @@ exports.removeMatch = async function (req, res, next) {
         }
 
         var deleted = await MatchService.deleteMatch(matchId);
-        return res.status(204).json({ status: 204, message: "Succesfully match deleted" });
+        return res.status(204).json({ status: 204, message: "Successfully match deleted" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
