@@ -14,7 +14,8 @@ exports.getUsers = async function (req, res, next) {
 exports.register = async function (req, res, next) {
     var user = {
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        role: req.body.role
     };
 
     try {
@@ -39,7 +40,7 @@ exports.signIn = async function (req, res, next) {
         } else {
             // JSON Web Token
             var token = await jwt.sign(
-                { _id: signedInUser._id, username: signedInUser.username },
+                { _id: signedInUser._id, username: signedInUser.username, role: signedInUser.role },
                 config.get('jwtsecret'), // private key
                 { expiresIn: 3600 } // 1 hour
             );
@@ -50,8 +51,16 @@ exports.signIn = async function (req, res, next) {
     }
 };
 
-exports.loginRequired = async function (req, res, next) {
-    if (req.user) {
+exports.userOnly = async function (req, res, next) {
+    if (req.user && (req.user.role == 'user' || req.user.role == 'admin')) {
+        next();
+    } else {
+        return res.status(401).json({ status: 401, message: "Unauthorized user" });
+    }
+};
+
+exports.adminOnly = async function (req, res, next) {
+    if (req.user && (req.user.role == 'admin')) {
         next();
     } else {
         return res.status(401).json({ status: 401, message: "Unauthorized user" });
