@@ -1,4 +1,4 @@
-var PlayerService = require('../services/player.service');
+const PlayerService = require('../services/player.service');
 
 exports.getPlayers = async function (req, res, next) {
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value

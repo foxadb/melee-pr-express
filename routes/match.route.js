@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 // Getting the Match Controller that we just created
-var MatchController = require('../controllers/match.controller');
+const MatchController = require('../controllers/match.controller');
 
 // Map GET controller functions
 router.get('/', MatchController.getMatches);

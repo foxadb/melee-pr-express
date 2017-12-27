@@ -1,4 +1,4 @@
-var Match = require('../models/match.model');
+const Match = require('../models/match.model');
 
 exports.getMatches = async function (query, page, limit) {
     var options = {

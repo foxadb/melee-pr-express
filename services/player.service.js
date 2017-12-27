@@ -1,5 +1,5 @@
-var Player = require('../models/player.model');
-var Match = require('../models/match.model');
+const Player = require('../models/player.model');
+const Match = require('../models/match.model');
 
 exports.getPlayers = async function (query, page, limit) {
     // Options setup for the mongoose paginate

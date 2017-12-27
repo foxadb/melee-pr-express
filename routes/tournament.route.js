@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 // Getting the Tournament Controller that we just created
-var TournamentController = require('../controllers/tournament.controller');
+const TournamentController = require('../controllers/tournament.controller');
 
 // Map GET controller functions
 router.get('/', TournamentController.getTournaments);

@@ -1,11 +1,11 @@
-var MatchService = require('../services/match.service');
-var PlayerService = require('../services/player.service');
-var TournamentService = require('../services/tournament.service');
+const MatchService = require('../services/match.service');
+const PlayerService = require('../services/player.service');
+const TournamentService = require('../services/tournament.service');
 
 exports.getMatches = async function (req, res, next) {
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value
     var page = req.query.page ? req.query.page : 1;
-    var limit = req.query.limit ? req.query.limit : 100;
+    var limit = req.query.limit ? req.query.limit : 30;
 
     try {
         var matches = await MatchService.getMatches({}, page, limit);

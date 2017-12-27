@@ -1,4 +1,4 @@
-var Tournament = require('../models/tournament.model');
+const Tournament = require('../models/tournament.model');
 
 exports.getTournaments = async function (query, page, limit) {
     var options = {

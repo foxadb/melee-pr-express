@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 // Getting the Player Controller that we just created
-var PlayerController = require('../controllers/player.controller');
+const PlayerController = require('../controllers/player.controller');
 
 // Map GET controller functions
 router.get('/', PlayerController.getPlayers);
