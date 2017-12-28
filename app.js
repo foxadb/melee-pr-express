@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 
 // Authentication with JSON Web Token
 app.use(function (req, res, next) {
-  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
+  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     jwt.verify(req.headers.authorization.split(' ')[1], config.get('jwtsecret'), function (err, decode) {
       if (err) {
         req.user = undefined;

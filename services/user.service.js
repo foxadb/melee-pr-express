@@ -31,19 +31,19 @@ exports.register = async function (user) {
     }
 };
 
-exports.signIn = async function (user) {
+exports.login = async function (user) {
     try {
         // Finding the user
-        var signedInUser = await User.findOne({ username: user.username });
+        var loggedUser = await User.findOne({ username: user.username });
 
-        if (signedInUser) {
+        if (loggedUser) {
             // Testing password matching
-            var res = await signedInUser.comparePassword(user.password);
-            return res ? signedInUser : undefined;
+            var res = await loggedUser.comparePassword(user.password);
+            return res ? loggedUser : undefined;
         } else {
             return undefined;
         }
     } catch (e) {
-        throw Error("Error while signing in user");
+        throw Error("Error while sign in user");
     }
 };

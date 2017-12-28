@@ -26,21 +26,21 @@ exports.register = async function (req, res, next) {
     }
 };
 
-exports.signIn = async function (req, res, next) {
+exports.login = async function (req, res, next) {
     var user = {
         username: req.body.username,
         password: req.body.password
     };
 
     try {
-        var signedInUser = await UserService.signIn(user);
+        var loggedUser = await UserService.login(user);
 
-        if (!signedInUser) {
+        if (!loggedUser) {
             return res.status(401).json({ status: 401, message: "Authentication failed. Wrond username or password" });
         } else {
             // JSON Web Token
             var token = await jwt.sign(
-                { _id: signedInUser._id, username: signedInUser.username, role: signedInUser.role },
+                { _id: loggedUser._id, username: loggedUser.username, role: loggedUser.role },
                 config.get('jwtsecret'), // private key
                 { expiresIn: 3600 } // 1 hour
             );
