@@ -5,6 +5,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const bluebird = require('bluebird');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
@@ -13,6 +14,9 @@ const index = require('./routes/index');
 const api = require('./routes/api.route');
 
 const app = express();
+
+// Enable CORS
+app.use(cors());
 
 console.log("Creating node server on http://localhost:3000");
 
@@ -29,14 +33,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// CORS Configuration for Angular 4 Front-End
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  next();
-});
 
 // Authentication with JSON Web Token
 app.use(function (req, res, next) {
