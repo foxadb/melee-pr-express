@@ -66,9 +66,9 @@ exports.updateMatch = async function (req, res, next) {
         id,
         player1: req.body.player1 ? req.body.player1 : null,
         player2: req.body.player2 ? req.body.player2 : null,
-        score1: req.body.score ? req.body.score1 : null,
-        score2: req.body.score ? req.body.score2 : null,
-        tournament: req.body.score ? req.body.tournament : null
+        score1: req.body.score1 ? req.body.score1 : null,
+        score2: req.body.score2 ? req.body.score2 : null,
+        tournament: req.body.tournament ? req.body.tournament : null
     };
 
     try {

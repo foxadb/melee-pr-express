@@ -60,11 +60,11 @@ exports.updateMatch = async function (match) {
     }
 
     // Edit the Match Object
-    oldMatch.player1 = match.player1;
-    oldMatch.player2 = match.player1;
-    oldMatch.score1 = match.score1;
-    oldMatch.score2 = match.score2;
-    oldMatch.tournament = match.tournament;
+    oldMatch.player1 = match.player1 || oldMatch.player1;
+    oldMatch.player2 = match.player2 || oldMatch.player2;
+    oldMatch.score1 = match.score1 || oldMatch.score1;
+    oldMatch.score2 = match.score2 || oldMatch.score2;
+    oldMatch.tournament = match.tournament || oldMatch.tournament;
 
     try {
         var savedMatch = await oldMatch.save();
