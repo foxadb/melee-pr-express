@@ -9,11 +9,11 @@ router.get('/', TournamentController.getTournaments);
 router.get('/:id', TournamentController.getTournament);
 
 // Map POST controller functions
-router.post('/', UserController.userOnly, TournamentController.createTournament);
-router.put('/', UserController.userOnly, TournamentController.updateTournament);
+router.post('/', UserController.managerOnly, TournamentController.createTournament);
+router.put('/', UserController.managerOnly, TournamentController.updateTournament);
 
 // Map DELETE controller functions
-router.delete('/:id', UserController.userOnly, TournamentController.removeTournament);
+router.delete('/:id', UserController.managerOnly, TournamentController.removeTournament);
 
 // Export the Router
 module.exports = router;

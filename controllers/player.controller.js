@@ -51,10 +51,10 @@ exports.updatePlayer = async function (req, res, next) {
 
     var player = {
         id,
-        name: req.body.name ? req.body.name : null,
-        mains: req.body.mains ? req.body.mains : null,
-        location: req.body.location ? req.body.location : null,
-        score: req.body.score ? req.body.score : null
+        name: req.body.name,
+        mains: req.body.mains,
+        location: req.body.location,
+        score: req.body.score
     };
 
     try {

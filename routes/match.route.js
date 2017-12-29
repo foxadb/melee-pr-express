@@ -9,11 +9,11 @@ router.get('/', MatchController.getMatches);
 router.get('/:id', MatchController.getMatch);
 
 // Map POST controller functions
-router.post('/', UserController.userOnly, MatchController.createMatch);
-router.put('/', UserController.userOnly, MatchController.updateMatch);
+router.post('/', UserController.managerOnly, MatchController.createMatch);
+router.put('/', UserController.managerOnly, MatchController.updateMatch);
 
 // Map DELETE controller functions
-router.delete('/:id', UserController.userOnly, MatchController.removeMatch);
+router.delete('/:id', UserController.managerOnly, MatchController.removeMatch);
 
 // Export the Router
 module.exports = router;

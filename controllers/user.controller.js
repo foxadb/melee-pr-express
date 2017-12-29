@@ -51,8 +51,8 @@ exports.login = async function (req, res, next) {
     }
 };
 
-exports.userOnly = async function (req, res, next) {
-    if (req.user && (req.user.role == 'user' || req.user.role == 'admin')) {
+exports.managerOnly = async function (req, res, next) {
+    if (req.user && (req.user.role == 'manager' || req.user.role == 'admin')) {
         next();
     } else {
         return res.status(401).json({ status: 401, message: "Unauthorized user" });

@@ -9,11 +9,11 @@ router.get('/', PlayerController.getPlayers);
 router.get('/:id', PlayerController.getPlayer);
 
 // Map POST controller functions
-router.post('/', UserController.userOnly, PlayerController.createPlayer);
-router.put('/', UserController.userOnly, PlayerController.updatePlayer);
+router.post('/', UserController.managerOnly, PlayerController.createPlayer);
+router.put('/', UserController.managerOnly, PlayerController.updatePlayer);
 
 // Map DELETE controller functions
-router.delete('/:id', UserController.userOnly, PlayerController.removePlayer);
+router.delete('/:id', UserController.managerOnly, PlayerController.removePlayer);
 
 // Export the Router
 module.exports = router;

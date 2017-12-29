@@ -53,10 +53,10 @@ exports.updateTournament = async function (req, res, next) {
 
     var tournament = {
         id,
-        name: req.body.name ? req.body.name : null,
-        location: req.body.location ? req.body.location : null,
-        organiser: req.body.organiser ? req.body.organiser : null,
-        matches: req.body.matches ? req.body.matches : null
+        name: req.body.name,
+        location: req.body.location,
+        organiser: req.body.organiser,
+        matches: req.body.matches
     };
 
     try {

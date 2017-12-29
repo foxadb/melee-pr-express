@@ -45,11 +45,9 @@ exports.createMatch = async function (match) {
 };
 
 exports.updateMatch = async function (match) {
-    var id = match.id;
-
     try {
         // Find the old Match Object by the Id
-        var oldMatch = await Match.findById(id);
+        var oldMatch = await Match.findById(match.id);
     } catch (e) {
         throw Error("Error occured while finding the match");
     }
@@ -60,11 +58,13 @@ exports.updateMatch = async function (match) {
     }
 
     // Edit the Match Object
-    oldMatch.player1 = match.player1 || oldMatch.player1;
-    oldMatch.player2 = match.player2 || oldMatch.player2;
-    oldMatch.score1 = match.score1 || oldMatch.score1;
-    oldMatch.score2 = match.score2 || oldMatch.score2;
-    oldMatch.tournament = match.tournament || oldMatch.tournament;
+    oldMatch.player1 = match.player1 != null ? match.player1 : oldMatch.player1;
+    oldMatch.player2 = match.player2 != null ? match.player2 : oldMatch.player2;
+    oldMatch.score1 = match.score1 != null ? match.score1 : oldMatch.score1;
+    oldMatch.score2 = match.score2 != null ? match.score2 : oldMatch.score2;
+    oldMatch.tournament = match.tournament != null ? match.tournament : oldMatch.tournament;
+
+    console.log(oldMatch);
 
     try {
         var savedMatch = await oldMatch.save();

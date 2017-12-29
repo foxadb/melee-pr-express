@@ -64,11 +64,11 @@ exports.updateMatch = async function (req, res, next) {
 
     var match = {
         id,
-        player1: req.body.player1 ? req.body.player1 : null,
-        player2: req.body.player2 ? req.body.player2 : null,
-        score1: req.body.score1 ? req.body.score1 : null,
-        score2: req.body.score2 ? req.body.score2 : null,
-        tournament: req.body.tournament ? req.body.tournament : null
+        player1: req.body.player1,
+        player2: req.body.player2,
+        score1: req.body.score1,
+        score2: req.body.score2,
+        tournament: req.body.tournament
     };
 
     try {

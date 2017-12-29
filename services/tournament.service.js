@@ -42,11 +42,9 @@ exports.createTournament = async function (tournament) {
 }
 
 exports.updateTournament = async function (tournament) {
-    var id = tournament.id;
-
     try {
         // Find the old Tournament Object by the Id
-        var oldTournament = await Tournament.findById(id);
+        var oldTournament = await Tournament.findById(tournament.id);
     } catch (e) {
         throw Error("Error occured while finding the tournament");
     }
@@ -57,11 +55,11 @@ exports.updateTournament = async function (tournament) {
     }
 
     // Edit the Tournament Object
-    oldTournament.name = tournament.name || oldTournament.name;
-    oldTournament.location = tournament.location || oldTournament.location;
-    oldTournament.organiser = tournament.organiser || oldTournament.organiser;
-    oldTournament.date = tournament.date || oldTournament.date;
-    oldTournament.matches = tournament.matches || oldTournament.matches;
+    oldTournament.name = tournament.name != null ? tournament.name : oldTournament.name;
+    oldTournament.location = tournament.location != null ? tournament.location : oldTournament.location;
+    oldTournament.organiser = tournament.organiser != null ? tournament.organiser : oldTournament.organiser;
+    oldTournament.date = tournament.date != null ? tournament.date : oldTournament.date;
+    oldTournament.matches = tournament.matches != null ? tournament.matches : oldTournament.matches;
 
     try {
         var savedTournament = await oldTournament.save();

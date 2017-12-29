@@ -43,11 +43,9 @@ exports.createPlayer = async function (player) {
 };
 
 exports.updatePlayer = async function (player) {
-    var id = player.id;
-
     try {
         // Find the old Player Object by the Id
-        var oldPlayer = await Player.findById(id);
+        var oldPlayer = await Player.findById(player.id);
     } catch (e) {
         throw Error("Error occured while finding the player");
     }
@@ -58,11 +56,11 @@ exports.updatePlayer = async function (player) {
     }
 
     // Edit the Player Object
-    oldPlayer.name = player.name || oldPlayer.name;
-    oldPlayer.mains = player.mains || oldPlayer.mains;
-    oldPlayer.location = player.location || oldPlayer.location;
-    oldPlayer.score = player.score || oldPlayer.score;
-    oldPlayer.matches = player.matches || oldPlayer.matches;
+    oldPlayer.name = player.name != null ? player.name : oldPlayer.name;
+    oldPlayer.mains = player.mains != null ? player.mains : oldPlayer.mains;
+    oldPlayer.location = player.location != null ? player.location : oldPlayer.location;
+    oldPlayer.score = player.score != null ? player.score : oldPlayer.score;
+    oldPlayer.matches = player.matches != null ? player.matches : oldPlayer.matches;
 
     try {
         var savedPlayer = await oldPlayer.save();
