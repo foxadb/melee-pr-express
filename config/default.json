@@ -2,7 +2,7 @@
     "mongodb": {
         "host": "localhost",
         "port": 27017,
-        "name": "fr-melee-pr"
+        "name": "melee-pr"
     },
     "jwtsecret": "CHANGE THIS ON PRODUCTION"
 }
