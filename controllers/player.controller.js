@@ -67,10 +67,19 @@ exports.updatePlayer = async function (req, res, next) {
 
 exports.removePlayer = async function (req, res, next) {
     // Player ID
-    var id = req.params.id;
+    var playerId = req.params.id;
 
     try {
-        await PlayerService.deletePlayer(id);
+        var matches = await PlayerService.getPlayer(playerId).matches;
+
+        // Delete all player matches
+        if (matches) {
+            matches.array.forEach(function (match) {
+                MatchController.removeMatch(match);
+            });
+        }
+
+        var deleted = await PlayerService.deletePlayer(playerId);
         return res.status(204).json({ status: 204, message: "Successfully player deleted" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });

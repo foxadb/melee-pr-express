@@ -75,9 +75,11 @@ exports.removeTournament = async function (req, res, next) {
         var matches = await TournamentService.getTournament(tournamentId).matches;
 
         // Delete all tournament matches
-        matches.array.forEach(function (match) {
-            MatchController.removeMatch(match);
-        });
+        if (matches) {
+            matches.array.forEach(function (match) {
+                MatchController.removeMatch(match);
+            });
+        }
 
         var deleted = await TournamentService.deleteTournament(tournamentId);
         return res.status(204).json({ status: 204, message: "Successfully tournament deleted" });

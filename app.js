@@ -79,7 +79,7 @@ mongoose.Promise = bluebird;
 var mongodbUrl = 'mongodb://' + config.get('mongodb.host') + ':' + config.get('mongodb.port') + '/' + config.get('mongodb.name');
 mongoose.connect(mongodbUrl, { useMongoClient: true }).then(
   () => {
-    console.log(`Succesfully connected to the MongoDB Database at: ${mongodbUrl}`);
+    console.log(`Successfully connected to the MongoDB Database at: ${mongodbUrl}`);
   },
   err => {
     console.log(`Error Connecting to the MongoDB Database at: ${mongodbUrl}`);
