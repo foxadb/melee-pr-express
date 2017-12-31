@@ -34,34 +34,34 @@ Use ``api/user`` for authentication.
         <tr>
             <td>User</td>
             <td>``user``</td>
-            <td>Optional parameter: ``:id``</td>
+            <td>Optional parameter: <code>:id</code></td>
             <td>
-                ```json
+                <pre>
                 {
                     "username": "david",
                     "password": "mystrongpassword"
                     "role": "manager"
                 }
-                ```
+                </pre>
             </td>
             <td>
-                ```json
+                <pre>
                 {
                     "_id": "507f1f77bcf86cd799439011"
                     "username": "david",
                     "password": "mystrongpassword",
                     "role": "admin"
                 }
-                ```
+                </pre>
             </td>
-            <td>Optional parameter: ``:id``</td>
+            <td>Optional parameter: <code>:id</code></td>
         </tr>
         <tr>
             <td>Player</td>
             <td>``player``</td>
-            <td>Optional parameter: ``:id``</td>
+            <td>Optional parameter: <code>:id</code></td>
             <td>
-                ```json
+                <pre>
                 {
                     "name": "Kazoo",
                     "mains": ["sheik", "ics"],
@@ -69,10 +69,10 @@ Use ``api/user`` for authentication.
                     "score": 1500,
                     "matches": [ { match id here } ] // recommanded not to use
                 }
-                ```
+                </pre>
             </td>
             <td>
-                ```json
+                <pre>
                 {
                     "_id": "507f191e810c19729de860ea",
                     "name": "Bobi",
@@ -81,41 +81,41 @@ Use ``api/user`` for authentication.
                     "score": 2000,
                     "matches": [ { match id here} ] // destructive, use with caution!
                 }
-                ```
+                </pre>
             </td>
-            <td>Optional parameter: ``:id``</td>
+            <td>Optional parameter: <code>:id</code></td>
         </tr>
         <tr>
             <td>Tournament</td>
             <td>``tournament``</td>
-            <td>Optional parameter: ``:id``</td>
+            <td>Optional parameter: <code>:id</code></td>
             <td>
-                ```json
+                <pre>
                 {
                     "name": "G.R.A.S. #9",
                     "organiser": "Ensimag Gaming",
                     "location": "Grenoble"
                 }
-                ```
+                </pre>
             </td>
             <td>
-                ```json
+                <pre>
                 {
                     "_id": "507f2d8d1s810c11k94d5a6pmz",
                     "name": "Arcamelee 3",
                     "organiser": "Team Arcaneum",
                     "location": "Lyon"
                 }
-                ```
+                </pre>
             </td>
-            <td>Optional parameter: ``:id``</td>
+            <td>Optional parameter: <code>:id</code></td>
         </tr>
         <tr>
             <td>Match</td>
             <td>``match``</td>
-            <td>Optional parameter: ``:id``</td>
+            <td>Optional parameter: <code>:id</code></td>
             <td>
-                ```json
+                <pre>
                 {
                     "player1": "507f9a6e84q71972w4q86az7",
                     "player2": "505d8a9ze4qofp83w7a969a6",
@@ -123,10 +123,10 @@ Use ``api/user`` for authentication.
                     "score2": 1,
                     "tournament": "505d89a6e47a4w1q2w7a4a7a6"
                 }
-                ```
+                </pre>
             </td>
             <td>
-                ```json
+                <pre>
                 {
                     "_id": "501w47a69a5q71979d5q417edw",
                     "player1": "507f9a679a87e719729a5861w15",
@@ -135,9 +135,9 @@ Use ``api/user`` for authentication.
                     "score2": 0,
                     "tournament": "505d89a6e47a4w1q2w7a4a7a6"
                 }
-                ```
+                </pre>
             </td>
-            <td>Optional parameter: ``:id``</td>
+            <td>Optional parameter: `<code>:id</code></td>
         </tr>
     </tbody>
 </table>
@@ -146,6 +146,6 @@ POST, PUT and DELETE are restricted with authentication system.
 
 ## Roles
 
-- without role (no authentication): have access to all GET requests excepting ``user``
+- without role (no authentication): have access to all GET requests except ``user``
 - ``manager``: have access to all API excepting ``user``
 - ``admin``: have access to all API
