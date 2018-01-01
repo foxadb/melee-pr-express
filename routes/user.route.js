@@ -6,9 +6,15 @@ const UserController = require('../controllers/user.controller');
 // Map GET function
 router.get('/', UserController.adminOnly, UserController.getUsers);
 
-// Map Register POST function
-router.post('/register', UserController.adminOnly, UserController.register);
-router.post('/login', UserController.login);
+// Map Register and Login POST function
+router.post('/register', UserController.adminOnly, UserController.registerUser);
+router.post('/login', UserController.loginUser);
+
+// Map PUT function
+router.put('/', UserController.adminOnly, UserController.updateUser);
+
+// Map DELETE function
+router.delete('/:id', UserController.adminOnly, UserController.deleteUser);
 
 // Export the Router
 module.exports = router;

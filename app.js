@@ -15,6 +15,9 @@ const api = require('./routes/api.route');
 
 const app = express();
 
+// Default admin (comment after first server launch)
+// require('./config/adminseed');
+
 // Enable CORS
 app.use(cors());
 

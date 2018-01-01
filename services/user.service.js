@@ -3,14 +3,14 @@ const bcrypt = require('bcrypt');
 
 exports.getUsers = async function () {
     try {
-        var users = await User.find().select({ username: 1});
+        var users = await User.find().select({ username: 1, role: 1});
         return users;
     } catch (e) {
         throw Error('Error while paginating users');
     }
 };
 
-exports.register = async function (user) {
+exports.registerUser = async function (user) {
     try {
         // Generating salt
         var salt = await bcrypt.genSalt(10);
@@ -31,7 +31,7 @@ exports.register = async function (user) {
     }
 };
 
-exports.login = async function (user) {
+exports.loginUser = async function (user) {
     try {
         // Finding the user
         var loggedUser = await User.findOne({ username: user.username });
@@ -45,5 +45,49 @@ exports.login = async function (user) {
         }
     } catch (e) {
         throw Error("Error while sign in user");
+    }
+};
+
+exports.updateUser = async function (user) {
+    try {
+        // Find the old User Object by the Id
+        var oldUser = await User.findById(user.id);
+    } catch (e) {
+        throw Error("Error occured while finding the user");
+    }
+
+    // If no old User Object exists return false
+    if (!oldUser) {
+        return false;
+    }
+
+    // Edit the User Object
+    oldUser.username = user.username != null ? user.username : oldUser.username;
+    oldUser.role = user.role != null ? user.role : oldUser.role;
+
+    if (user.password) {
+        // Generating salt
+        var salt = await bcrypt.genSalt(10);
+        // Hashing the user password
+        oldUser.password = await bcrypt.hash(user.password, salt);
+    }
+
+    try {
+        var savedTournament = await oldUser.save();
+        return savedTournament;
+    } catch (e) {
+        throw Error("Error occured while updating the tournament");
+    }
+}
+
+exports.deleteUser = async function (id) {
+    try {
+        var deleted = await User.remove({ _id: id });
+        if (deleted.result.n === 0) {
+            throw Error("User could not be deleted")
+        }
+        return deleted;
+    } catch (e) {
+        throw Error("Error Occured while deleting the user");
     }
 };
