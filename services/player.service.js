@@ -1,5 +1,6 @@
 const Player = require('../models/player.model');
 const Match = require('../models/match.model');
+const EloRank = require('../models/elorank.model');
 
 exports.getPlayers = async function (query, page, limit) {
     // Options setup for the mongoose paginate
@@ -108,8 +109,48 @@ exports.removeMatch = async function (playerId, matchId) {
 
         // Save to the database
         await player.save();
+
+        // Return the player
         return player;
     } catch (e) {
         throw Error("Error occured while removing a player match");
+    }
+};
+
+exports.updateEloRank = async function (match) {
+    try {
+        // Find the players
+        var player1 = await Player.findById(match.player1);
+        var player2 = await Player.findById(match.player2);
+
+        // Actual match result
+        let actual;
+        if (match.score1 > match.score2) {
+            actual = 1;
+        } else if (match.score1 < match.score2) {
+            actual = 0;
+        } else {
+            actual = 0.5;
+        }
+
+        // Elo Rank System
+        var eloRank = new EloRank(32);
+
+        // Compute the new Elo Rank for Player 1
+        player1.score = eloRank.compareAndUpdateRank(actual, player1.score, player2.score);
+
+        // Compute the new Elo Rank for Player 2
+        if (actual == 1) {
+            actual = 0;
+        } else if (actual == 0) {
+            actual = 1;
+        }
+        player2.score = eloRank.compareAndUpdateRank(actual, player2.score, player1.score);
+
+        // Save into the database
+        await player1.save();
+        await player2.save();
+    } catch (e) {
+        throw Error("Error occured while updating the Elo Rank");
     }
 };

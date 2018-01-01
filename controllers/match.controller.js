@@ -48,6 +48,10 @@ exports.createMatch = async function (req, res, next) {
             TournamentService.addMatch(createdMatch.tournament, createdMatch);
         }
 
+        // Update the Elo Ranks
+        await PlayerService.updateEloRank(match);
+
+        // Return success result
         return res.status(201).json({ status: 201, data: createdMatch, message: "Successfully created match" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: "Match creation was unsuccessfull" });
