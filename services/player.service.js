@@ -91,9 +91,8 @@ exports.addMatch = async function (playerId, matchId) {
         // Push the new match to the list
         player.matches.push(matchId);
 
-        // Save to the database
-        await player.save();
-        return player;
+        var savedPlayer = player.save();
+        return savedPlayer;
     } catch (e) {
         throw Error("Error occured while adding a player match");
     }
@@ -105,7 +104,10 @@ exports.removeMatch = async function (playerId, matchId) {
         var player = await Player.findById(playerId);
         
         // Remove the match from the list
-        player.matches = player.matches.filter(match => match != matchId);
+        let index = player.matches.indexOf(matchId);
+        if (index > -1) {
+            player.matches.splice(index, 1);
+        }
 
         // Save to the database
         await player.save();

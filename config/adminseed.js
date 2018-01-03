@@ -8,4 +8,4 @@ var admin = {
     role: "admin"
 };
 
-UserService.register(admin);
+UserService.registerUser(admin);

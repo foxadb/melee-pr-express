@@ -7,7 +7,7 @@ const TournamentSchema = new mongoose.Schema({
     organiser: { type: String, maxlength: 24 },
     date: { type: Date, default: Date.now() },
     matches: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournament' }]
-});
+}, { usePushEach: true } );
 
 TournamentSchema.plugin(mongoosePaginate);
 const Tournament = mongoose.model('Tournament', TournamentSchema);

@@ -40,16 +40,14 @@ exports.createMatch = async function (req, res, next) {
         var createdMatch = await MatchService.createMatch(match);
 
         // Add the new match to the players matches list
-        PlayerService.addMatch(createdMatch.player1, createdMatch);
-        PlayerService.addMatch(createdMatch.player2, createdMatch);
+        PlayerService.addMatch(createdMatch.player1, createdMatch._id);
+        PlayerService.addMatch(createdMatch.player2, createdMatch._id);
 
         // Add the new match to its tournament
-        if (match.tournament) {
-            TournamentService.addMatch(createdMatch.tournament, createdMatch);
-        }
+        TournamentService.addMatch(createdMatch.tournament, createdMatch._id);
 
         // Update the Elo Ranks
-        await PlayerService.updateEloRank(match);
+        PlayerService.updateEloRank(match);
 
         // Return success result
         return res.status(201).json({ status: 201, data: createdMatch, message: "Successfully created match" });
@@ -90,15 +88,20 @@ exports.removeMatch = async function (req, res, next) {
     try {
         var match = await MatchService.getMatch(matchId);
 
-        // Remove the match from player matches list
-        PlayerService.removeMatch(match.player1, matchId);
-        PlayerService.removeMatch(match.player2, matchId);
+        if (match) {
+            // Remove the match from player matches list
+            PlayerService.removeMatch(match.player1._id, matchId);
+            PlayerService.removeMatch(match.player2._id, matchId);
 
-        // Remove the match from its tournament
-        if (match.tournament) {
-            TournamentService.removeMatch(match.tournament, matchId);
+            // Remove the match from its tournament
+            if (match.tournament) {
+                TournamentService.removeMatch(match.tournament._id, matchId);
+            }
+        } else {
+            throw Error("Match does not exist");
         }
 
+        // Delete the match
         var deleted = await MatchService.deleteMatch(matchId);
         return res.status(204).json({ status: 204, message: "Successfully match deleted" });
     } catch (e) {

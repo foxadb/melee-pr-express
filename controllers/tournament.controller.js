@@ -1,5 +1,6 @@
 const TournamentService = require('../services/tournament.service');
-const MatchController = require('./match.controller');
+const PlayerService = require('../services/player.service');
+const MatchService = require('../services/match.service');
 
 exports.getTournaments = async function (req, res, next) {
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value
@@ -72,14 +73,23 @@ exports.removeTournament = async function (req, res, next) {
     var tournamentId = req.params.id;
 
     try {
-        var matches = await TournamentService.getTournament(tournamentId).matches;
+        var tournament = await TournamentService.getTournament(tournamentId);
+        var matches = tournament.matches;
+
+        console.log(matches);
 
         // Delete all tournament matches
         if (matches) {
-            matches.array.forEach(function (match) {
-                MatchController.removeMatch(match);
+            matches.forEach(async function (matchId) {
+                let match = await MatchService.getMatch(matchId);
+                console.log(match);
+                
+                // Remove the match from player matches list
+                PlayerService.removeMatch(match.player1._id, matchId);
+                PlayerService.removeMatch(match.player2._id, matchId);
             });
         }
+        console.log("je vais delete");
 
         var deleted = await TournamentService.deleteTournament(tournamentId);
         return res.status(204).json({ status: 204, message: "Successfully tournament deleted" });

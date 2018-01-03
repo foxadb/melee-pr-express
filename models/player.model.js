@@ -7,7 +7,7 @@ const PlayerSchema = new mongoose.Schema({
     score: { type: Number, default: 1000 },
     location: { type: String, maxlength: 24 },
     matches: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Match' }]
-});
+}, { usePushEach: true });
 
 PlayerSchema.plugin(mongoosePaginate);
 const Player = mongoose.model('Player', PlayerSchema);

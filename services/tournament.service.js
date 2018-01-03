@@ -90,8 +90,8 @@ exports.addMatch = async function (tournamentId, matchId) {
         tournament.matches.push(matchId);
 
         // Save to the database
-        await tournament.save();
-        return tournament;
+        var savedTournament = await tournament.save();
+        return savedTournament;
     } catch (e) {
         throw Error("Error occured while adding a match to a tournament");
     }
