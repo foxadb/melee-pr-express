@@ -67,7 +67,7 @@ Use ``api/user`` for authentication.
     "mains": ["sheik", "ics"],
     "location": "Grenoble",
     "score": 1500,
-    "matches": [ { match id here } ] // recommanded not to use
+    "matches": [ "507f9a6e8a8z41972w4476az7" ]
 }
                 </pre>
             </td>
@@ -79,7 +79,7 @@ Use ``api/user`` for authentication.
     "mains": ["falco"],
     "location": "Lyon",
     "score": 2000,
-    "matches": [ { match id here} ] // destructive, use with caution!
+    "matches": [ "501w47a69a5q71979d5q417edw" ]
 }
                 </pre>
             </td>
@@ -144,8 +144,15 @@ Use ``api/user`` for authentication.
 
 POST, PUT and DELETE are restricted with authentication system.
 
+**Be careful, ``matches`` field in the POST/PUT requests of ``api/match`` is destructive. Use it at your own risk!**
+
 ## Roles
 
 - without role (no authentication): have access to all GET requests except ``user``
 - ``manager``: have access to all API excepting ``user``
 - ``admin``: have access to all API
+
+## Elo Ranking System
+
+A ranking system based on [Elo](https://en.wikipedia.org/wiki/Elo_rating_system) is implemented in the Match API.
+This feature compute automaticaly new player scores when a match is submitted.
