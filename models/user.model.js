@@ -8,6 +8,18 @@ const UserSchema = new mongoose.Schema({
     role: { type: String, enum: ['manager', 'admin'], required: true }
 }, { timestamps: true });
 
+UserSchema.methods.hashPassword = async function () {
+    try {
+        // Generating salt
+        let salt = await bcrypt.genSalt(10);
+        
+        // Hashing the user password
+        this.password = await bcrypt.hash(this.password, salt);
+    } catch (e) {
+        throw Error("Error while creating user");
+    }
+};
+
 UserSchema.methods.comparePassword = async function (password) {
     try {
         var res = await bcrypt.compare(password, this.password);

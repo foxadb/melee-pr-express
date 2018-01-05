@@ -13,16 +13,19 @@ exports.getUsers = async function () {
 exports.registerUser = async function (user) {
     try {
         // Generating salt
-        var salt = await bcrypt.genSalt(10);
+        //var salt = await bcrypt.genSalt(10);
         // Hashing the user password
-        var hash = await bcrypt.hash(user.password, salt);
+        //var hash = await bcrypt.hash(user.password, salt);
 
         // Creating a new user with the hashed password
         var newUser = new User({
             username: user.username,
-            password: hash,
+            password: user.password,
             role: user.role
         });
+
+        // Hashing the user password
+        await newUser.hashPassword();
 
         var savedUser = await newUser.save();
         return savedUser;
@@ -73,8 +76,8 @@ exports.updateUser = async function (user) {
     }
 
     try {
-        var savedTournament = await oldUser.save();
-        return savedTournament;
+        var savedUser = await oldUser.save();
+        return savedUser;
     } catch (e) {
         throw Error("Error occured while updating the tournament");
     }

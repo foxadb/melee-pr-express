@@ -146,13 +146,18 @@ POST, PUT and DELETE are restricted with authentication system.
 
 **Be careful, ``matches`` field in the POST/PUT requests of ``api/match`` is destructive. Use it at your own risk!**
 
-## Roles
+#### Roles
 
 - without role (no authentication): have access to all GET requests except ``user``
 - ``manager``: have access to all API excepting ``user``
 - ``admin``: have access to all API
 
-## Elo Ranking System
+#### Elo Ranking System
 
 A ranking system based on [Elo](https://en.wikipedia.org/wiki/Elo_rating_system) is implemented in the Match API.
 This feature compute automaticaly new player scores when a match is submitted.
+
+
+### Testing
+
+Run unit tests with ``npm test`` using [mocha](https://mochajs.org/).
