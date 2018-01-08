@@ -5,6 +5,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const cors = require('cors');
 const bluebird = require('bluebird');
 const passport = require('passport');
@@ -17,6 +18,9 @@ const app = express();
 
 // Default admin (comment after first server launch)
 // require('./config/adminseed');
+
+// Helmet
+app.use(helmet());
 
 // Enable CORS
 app.use(cors());
