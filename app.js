@@ -19,11 +19,24 @@ const app = express();
 // Default admin (comment after first server launch)
 // require('./config/adminseed');
 
+// MongoDB
+const mongoose = require('mongoose');
+mongoose.Promise = bluebird;
+var mongodbUrl = 'mongodb://' + config.get('mongodb.host') + ':' + config.get('mongodb.port') + '/' + config.get('mongodb.name');
+mongoose.connect(mongodbUrl, { useMongoClient: true }).then(
+  () => console.log(`Successfully connected to the MongoDB Database at: ${mongodbUrl}`),
+  err => console.log(`Error Connecting to the MongoDB Database at: ${mongodbUrl}`)
+);
+
 // Helmet
 app.use(helmet());
 
 // Enable CORS
-app.use(cors());
+var corsOptions = {
+  origin: 'http://localhost:4200',
+  optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
 
 console.log("Creating node server on http://localhost:3000");
 
@@ -79,19 +92,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-// MongoDB
-const mongoose = require('mongoose');
-mongoose.Promise = bluebird;
-var mongodbUrl = 'mongodb://' + config.get('mongodb.host') + ':' + config.get('mongodb.port') + '/' + config.get('mongodb.name');
-mongoose.connect(mongodbUrl, { useMongoClient: true }).then(
-  () => {
-    console.log(`Successfully connected to the MongoDB Database at: ${mongodbUrl}`);
-  },
-  err => {
-    console.log(`Error Connecting to the MongoDB Database at: ${mongodbUrl}`);
-  }
-);
-
 
 module.exports = app;

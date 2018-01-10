@@ -12,11 +12,6 @@ exports.getUsers = async function () {
 
 exports.registerUser = async function (user) {
     try {
-        // Generating salt
-        //var salt = await bcrypt.genSalt(10);
-        // Hashing the user password
-        //var hash = await bcrypt.hash(user.password, salt);
-
         // Creating a new user with the hashed password
         var newUser = new User({
             username: user.username,
@@ -54,7 +49,7 @@ exports.loginUser = async function (user) {
 exports.updateUser = async function (user) {
     try {
         // Find the old User Object by the Id
-        var oldUser = await User.findById(user.id);
+        var oldUser = await User.findById(user._id);
     } catch (e) {
         throw Error("Error occured while finding the user");
     }
@@ -69,10 +64,8 @@ exports.updateUser = async function (user) {
     oldUser.role = user.role != null ? user.role : oldUser.role;
 
     if (user.password) {
-        // Generating salt
-        var salt = await bcrypt.genSalt(10);
-        // Hashing the user password
-        oldUser.password = await bcrypt.hash(user.password, salt);
+        oldUser.password = user.password;
+        await oldUser.hashPassword();
     }
 
     try {

@@ -79,7 +79,7 @@ describe('UserService', function () {
 
     describe('#updateUser', function () {
 
-        it('should delete the user', async function () {
+        it('should update the user', async function () {
             let user = await UserService.registerUser({
                 username: 'luigi',
                 password: 'dairnair',
@@ -87,7 +87,7 @@ describe('UserService', function () {
             });
 
             let updatedUser = await UserService.updateUser({
-                id: user.id,
+                _id: user.id,
                 username: 'marth',
                 role: 'admin'
             });

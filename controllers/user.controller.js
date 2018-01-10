@@ -68,7 +68,7 @@ exports.updateUser = async function (req, res, next) {
 
     try {
         var updatedUser = await UserService.updateUser(user);
-        return res.status(200).json({ status: 200, data: updatedTournament, message: "Successfully updated tournament" });
+        return res.status(200).json({ status: 200, data: updatedUser, message: "Successfully updated tournament" });
     } catch (e) {
         return res.status(400).json({ status: 400., message: e.message });
     }

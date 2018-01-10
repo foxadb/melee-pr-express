@@ -3,7 +3,7 @@ const assert = chai.assert;
 
 const User = require('../models/user.model');
 
-describe('User', function () {
+describe('UserModel', function () {
 
     describe('#comparePassword', async function () {
         
