@@ -1,10 +1,8 @@
 const Match = require('../models/match.model');
 
 exports.getMatches = async function (query, page, limit) {
-    var options = {
-        page,
-        limit
-    };
+    // Options setup for the mongoose paginate
+    var options = { page, limit };
 
     try {
         var matches = await Match.paginate(query, options);

@@ -4,8 +4,12 @@ const TournamentService = require('../services/tournament.service');
 
 exports.getMatches = async function (req, res, next) {
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value
-    var page = req.query.page ? req.query.page : 1;
-    var limit = req.query.limit ? req.query.limit : 30;
+    var page = req.query.page ? +req.query.page : 1;
+    var limit = req.query.limit ? +req.query.limit : 30;
+
+    if (limit > 50) {
+        return res.status(403).json({ status: 403, message: "Limit can not be higher than 50" });
+    }
 
     try {
         var matches = await MatchService.getMatches({}, page, limit);

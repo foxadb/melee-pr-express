@@ -4,10 +4,7 @@ const EloRank = require('../models/elorank.model');
 
 exports.getPlayers = async function (query, page, limit) {
     // Options setup for the mongoose paginate
-    var options = {
-        page,
-        limit
-    };
+    var options = { page, limit };
 
     try {
         var players = await Player.paginate(query, options);

@@ -1,10 +1,8 @@
 const Tournament = require('../models/tournament.model');
 
 exports.getTournaments = async function (query, page, limit) {
-    var options = {
-        page,
-        limit
-    };
+    // Options setup for the mongoose paginate
+    var options = { page, limit };
 
     try {
         var tournaments = await Tournament.paginate(query, options);
