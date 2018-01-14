@@ -15,6 +15,12 @@ Navigate to http://localhost:3000 to access the server.
 
 The app will automatically reload if you change any of the source files.
 
+### Testing
+
+Run unit tests with ``npm run unit-test`` using [mocha](https://mochajs.org/).
+
+Run load tests with ``npm run load-test`` using [artillery](https://artillery.io).
+
 ### API Features
 
 Send Ajax requests to http://localhost:3000/api
@@ -156,8 +162,3 @@ POST, PUT and DELETE are restricted with authentication system.
 
 A ranking system based on [Elo](https://en.wikipedia.org/wiki/Elo_rating_system) is implemented in the Match API.
 This feature compute automaticaly new player scores when a match is submitted.
-
-
-### Testing
-
-Run unit tests with ``npm test`` using [mocha](https://mochajs.org/).

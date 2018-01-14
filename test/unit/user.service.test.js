@@ -2,7 +2,7 @@ const chai = require('chai');
 const assert = chai.assert;
 const expect = chai.expect;
 
-const UserService = require('../services/user.service');
+const UserService = require('../../services/user.service');
 
 const bluebird = require('bluebird');
 const mongoose = require('mongoose');

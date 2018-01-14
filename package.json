@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "mocha --exit"
+    "unit-test": "mocha test/unit --exit",
+    "load-test": "artillery run test/load.yml"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
@@ -26,6 +27,7 @@
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
+    "artillery": "^1.6.0-12",
     "chai": "^4.1.2",
     "mocha": "^4.1.0",
     "supertest": "^3.0.0"

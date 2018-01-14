@@ -1,7 +1,7 @@
 const chai = require('chai');
 const assert = chai.assert;
 
-const User = require('../models/user.model');
+const User = require('../../models/user.model');
 
 describe('UserModel', function () {
 
