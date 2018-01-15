@@ -2,9 +2,13 @@ const Player = require('../models/player.model');
 const Match = require('../models/match.model');
 const EloRank = require('../models/elorank.model');
 
-exports.getPlayers = async function (query, page, limit) {
+exports.getPlayers = async function (query, page, limit, ranking) {
     // Options setup for the mongoose paginate
     var options = { page, limit };
+
+    if (ranking) {
+        options.sort = { score: -1 };
+    }
 
     try {
         var players = await Player.paginate(query, options);

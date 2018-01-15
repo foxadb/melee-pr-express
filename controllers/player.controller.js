@@ -4,18 +4,18 @@ exports.getPlayers = async function (req, res, next) {
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value
     var page = req.query.page ? +req.query.page : 1;
     var limit = req.query.limit ? +req.query.limit : 30;
+    var ranking = (req.query.ranking == 'true');
 
     if (limit > 50) {
         return res.status(403).json({ status: 403, message: "Limit can not be higher than 50" });
     }
 
     try {
-        var players = await PlayerService.getPlayers({}, page, limit);
+        var players = await PlayerService.getPlayers({}, page, limit, ranking);
         return res.status(200).json({ status: 200, data: players, message: "Successfully players received" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
-
 };
 
 exports.getPlayer = async function (req, res, next) {
