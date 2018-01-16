@@ -16,17 +16,20 @@ const api = require('./routes/api.route');
 
 const app = express();
 
-// Default admin (comment after first server launch)
-// require('./config/adminseed');
-
 // MongoDB
 const mongoose = require('mongoose');
 mongoose.Promise = bluebird;
 var mongodbUrl = 'mongodb://' + config.get('mongodb.host') + ':' + config.get('mongodb.port') + '/' + config.get('mongodb.name');
 mongoose.connect(mongodbUrl, { useMongoClient: true }).then(
-  () => console.log(`Successfully connected to the MongoDB Database at: ${mongodbUrl}`),
+  () => {
+    console.log(`Successfully connected to the MongoDB Database at: ${mongodbUrl}`);
+    app.emit("appStarted");
+  },
   err => console.log(`Error Connecting to the MongoDB Database at: ${mongodbUrl}`)
 );
+
+// Default admin (comment after first server launch)
+// require('./config/adminseed');
 
 // Helmet
 app.use(helmet());

@@ -64,10 +64,9 @@ describe('User API', function () {
 
     var userId;
 
-    /*
     it('Register a manager', function (done) {
         let body = {
-            username: 'newuser',
+            username: 'newmanager',
             password: 'password',
             role: 'manager'
         };
@@ -83,7 +82,6 @@ describe('User API', function () {
             })
             .expect(201, done);
     });
-    */
 
     it('Register an admin', function (done) {
         let body = {
@@ -133,7 +131,7 @@ describe('User API', function () {
 
     it('Already existing username: should fail', function (done) {
         let body = {
-            username: 'newuser',
+            username: 'newmanager',
             password: 'password',
             role: 'manager'
         };

@@ -2,11 +2,6 @@
     "mongodb": {
         "host": "localhost",
         "port": 27017,
-        "name": "melee-pr"
-    },
-    "mongodb-test": {
-        "host": "localhost",
-        "port": 27017,
         "name": "melee-pr-test"
     },
     "jwtsecret": "CHANGE THIS ON PRODUCTION"

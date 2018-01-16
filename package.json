@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "unit-test": "mocha test/unit --exit",
-    "load-test": "artillery run test/load.yml"
+    "start": "NODE_ENV=production nodemon ./bin/www",
+    "unit-tests": "NODE_ENV=test mocha test/unit-tests.js --exit",
+    "load-tests": "artillery run test/load.yml"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
