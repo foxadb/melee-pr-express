@@ -15,11 +15,16 @@ exports.getTournaments = async function (query, page, limit) {
 exports.getTournament = async function (id) {
     try {
         var tournament = await Tournament.findById(id);
-        return tournament;
+
+        if (tournament) {
+            return tournament;
+        } else {
+            throw Error;
+        }
     } catch (e) {
-        throw Error('Error while paginating tournament');
+        throw Error('Tournament not found');
     }
-}
+};
 
 exports.createTournament = async function (tournament) {
     var newTournament = new Tournament({
@@ -83,7 +88,7 @@ exports.addMatch = async function (tournamentId, matchId) {
     try {
         // Find the tournament
         var tournament = await Tournament.findById(tournamentId);
-        
+
         // Push the new match to the list
         tournament.matches.push(matchId);
 
@@ -99,7 +104,7 @@ exports.removeMatch = async function (tournamentId, matchId) {
     try {
         // Find the player
         var tournament = await Tournament.findById(tournamentId);
-        
+
         // Remove the match from the list
         tournament.matches = tournament.matches.filter(match => match != matchId);
 

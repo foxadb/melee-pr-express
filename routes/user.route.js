@@ -5,6 +5,7 @@ const UserController = require('../controllers/user.controller');
 
 // Map GET function
 router.get('/', UserController.adminOnly, UserController.getUsers);
+router.get('/:id', UserController.adminOnly, UserController.getUser);
 
 // Map Register and Login POST function
 router.post('/register', UserController.adminOnly, UserController.registerUser);
