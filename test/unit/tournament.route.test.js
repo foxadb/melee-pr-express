@@ -77,12 +77,27 @@ describe('Tournament API', function () {
             .expect('Content-Type', /json/)
             .expect(200, done);
     });
+
+    it('GET/:unknown_id', function (done) {
+        request(app)
+            .get(`${tournamentRoute}/7894556123`)
+            .set('Authorization', token)
+            .expect('Content-Type', /json/)
+            .expect(400, done);
+    });
     
     it('DELETE', function (done) {
         request(app)
             .delete(`${tournamentRoute}/${tournamentId}`)
             .set('Authorization', token)
             .expect(204, done);
+    });
+    
+    it('DELETE an unknown tournament', function (done) {
+        request(app)
+            .delete(`${tournamentRoute}/7894556123`)
+            .set('Authorization', token)
+            .expect(400, done);
     });
 
 });

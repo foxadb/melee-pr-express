@@ -27,10 +27,23 @@ describe('User API', function () {
             .expect(200, done);
     });
 
-    it('Login Fail', function (done) {
+    it('Login Fail: wrong password', function (done) {
         let body = {
             username: 'admin',
             password: 'wrongpassword'
+        }
+
+        request(app)
+            .post(`${userRoute}/login`)
+            .send(body)
+            .expect('Content-Type', /json/)
+            .expect(401, done);
+    });
+
+    it('Login Fail: unknown username', function (done) {
+        let body = {
+            username: 'unknown',
+            password: 'password'
         }
 
         request(app)
@@ -50,11 +63,32 @@ describe('User API', function () {
 
     var userId;
 
-    it('Register', function (done) {
+    /*
+    it('Register a manager', function (done) {
         let body = {
             username: 'newuser',
             password: 'password',
             role: 'manager'
+        };
+
+        request(app)
+            .post(`${userRoute}/register`)
+            .set('Authorization', token)
+            .send(body)
+            .expect('Content-Type', /json/)
+            .expect(function (res) {
+                console.log(res);
+                userId = res.body.data._id;
+            })
+            .expect(201, done);
+    });
+    */
+
+    it('Register an admin', function (done) {
+        let body = {
+            username: 'newadmin',
+            password: 'password',
+            role: 'admin'
         };
 
         request(app)
@@ -68,7 +102,7 @@ describe('User API', function () {
             .expect(201, done);
     });
 
-    it('Register w/o Auth: should fail', function (done) {
+    it('Register a manager w/o Auth: should fail', function (done) {
         let body = {
             username: 'nouser',
             password: 'nopassword',
@@ -80,6 +114,35 @@ describe('User API', function () {
             .send(body)
             .expect('Content-Type', /json/)
             .expect(401, done);
+    });
+
+    it('Register an admin w/o Auth: should fail', function (done) {
+        let body = {
+            username: 'nouser',
+            password: 'nopassword',
+            role: 'admin'
+        };
+
+        request(app)
+            .post(`${userRoute}/register`)
+            .send(body)
+            .expect('Content-Type', /json/)
+            .expect(401, done);
+    });
+
+    it('Already existing username: should fail', function (done) {
+        let body = {
+            username: 'newuser',
+            password: 'password',
+            role: 'manager'
+        };
+
+        request(app)
+            .post(`${userRoute}/register`)
+            .set('Authorization', token)
+            .send(body)
+            .expect('Content-Type', /json/)
+            .expect(400, done);
     });
 
     it('Update', function (done) {

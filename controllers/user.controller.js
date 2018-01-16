@@ -36,7 +36,7 @@ exports.loginUser = async function (req, res, next) {
         var loggedUser = await UserService.loginUser(user);
 
         if (!loggedUser) {
-            return res.status(401).json({ status: 401, message: "Authentication failed. Wrond username or password" });
+            return res.status(401).json({ status: 401, message: "Authentication failed. Wrong username or password" });
         } else {
             // JSON Web Token
             var token = await jwt.sign(
@@ -80,7 +80,7 @@ exports.deleteUser = async function (req, res, next) {
 
     try {
         var deleted = await UserService.deleteUser(userId);
-        return res.status(204).json({ status: 204, message: "Successfully match deleted" });
+        return res.status(204).json({ status: 204, message: "Successfully deleted user" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
