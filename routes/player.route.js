@@ -13,7 +13,7 @@ router.post('/', UserController.managerOnly, PlayerController.createPlayer);
 router.put('/', UserController.managerOnly, PlayerController.updatePlayer);
 
 // Map DELETE controller functions
-router.delete('/:id', UserController.managerOnly, PlayerController.removePlayer);
+router.delete('/:id', UserController.managerOnly, PlayerController.deletePlayer);
 
 // Export the Router
 module.exports = router;

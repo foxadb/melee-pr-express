@@ -49,7 +49,7 @@ exports.createPlayer = async function (req, res, next) {
 exports.updatePlayer = async function (req, res, next) {
     // Id is necessary for the update
     if (!req.body._id) {
-        return res.status(400).json({ status: 400., message: "Id must be present" });
+        return res.status(400).json({ status: 400, message: "Id must be present" });
     }
 
     var id = req.body._id;
@@ -66,27 +66,28 @@ exports.updatePlayer = async function (req, res, next) {
         var updatedPlayer = await PlayerService.updatePlayer(player);
         return res.status(200).json({ status: 200, data: updatedPlayer, message: "Successfully updated player" });
     } catch (e) {
-        return res.status(400).json({ status: 400., message: e.message });
+        return res.status(403).json({ status: 403, message: e.message });
     }
 };
 
-exports.removePlayer = async function (req, res, next) {
+exports.deletePlayer = async function (req, res, next) {
     // Player ID
     var playerId = req.params.id;
 
     try {
-        var matches = await PlayerService.getPlayer(playerId).matches;
+        var player = await PlayerService.getPlayer(playerId);
+        var matches = player.matches;
 
         // Delete all player matches
         if (matches) {
-            matches.array.forEach(function (match) {
-                MatchController.removeMatch(match);
+            matches.forEach(function (match) {
+                MatchController.deleteMatch(match);
             });
         }
 
         var deleted = await PlayerService.deletePlayer(playerId);
         return res.status(204).json({ status: 204, message: "Successfully player deleted" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: e.message });
+        return res.status(403).json({ status: 403, message: e.message });
     }
 };

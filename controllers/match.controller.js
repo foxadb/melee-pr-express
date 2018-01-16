@@ -63,7 +63,7 @@ exports.createMatch = async function (req, res, next) {
 exports.updateMatch = async function (req, res, next) {
     // Id is necessary for the update
     if (!req.body._id) {
-        return res.status(400).json({ status: 400., message: "Id must be present" });
+        return res.status(400).json({ status: 400, message: "Id must be present" });
     }
 
     var id = req.body._id;
@@ -81,11 +81,11 @@ exports.updateMatch = async function (req, res, next) {
         var updatedMatch = await MatchService.updateMatch(match);
         return res.status(200).json({ status: 200, data: updatedMatch, message: "Successfully updated match" });
     } catch (e) {
-        return res.status(400).json({ status: 400., message: e.message });
+        return res.status(403).json({ status: 403, message: e.message });
     }
 };
 
-exports.removeMatch = async function (req, res, next) {
+exports.deleteMatch = async function (req, res, next) {
     // Match ID
     var matchId = req.params.id;
 
@@ -109,6 +109,6 @@ exports.removeMatch = async function (req, res, next) {
         var deleted = await MatchService.deleteMatch(matchId);
         return res.status(204).json({ status: 204, message: "Successfully match deleted" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: e.message });
+        return res.status(403).json({ status: 403, message: e.message });
     }
 };

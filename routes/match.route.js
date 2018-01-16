@@ -13,7 +13,7 @@ router.post('/', UserController.managerOnly, MatchController.createMatch);
 router.put('/', UserController.managerOnly, MatchController.updateMatch);
 
 // Map DELETE controller functions
-router.delete('/:id', UserController.managerOnly, MatchController.removeMatch);
+router.delete('/:id', UserController.managerOnly, MatchController.deleteMatch);
 
 // Export the Router
 module.exports = router;

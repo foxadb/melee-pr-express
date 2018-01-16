@@ -1,6 +1,7 @@
+const app = require('../../app');
+
 const mocha = require('mocha');
 const request = require('supertest');
-const app = require('../../app');
 
 const chai = require('chai');
 const expect = chai.expect;
@@ -113,7 +114,7 @@ describe('User API', function () {
             .post(`${userRoute}/register`)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(403, done);
+            .expect(401, done);
     });
 
     it('Register an admin w/o Auth: should fail', function (done) {
@@ -127,7 +128,7 @@ describe('User API', function () {
             .post(`${userRoute}/register`)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(403, done);
+            .expect(401, done);
     });
 
     it('Already existing username: should fail', function (done) {
@@ -158,7 +159,7 @@ describe('User API', function () {
             .set('Authorization', token)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(204, done);
+            .expect(200, done);
     });
 
     it('Update w/o Auth: should fail', function (done) {
@@ -171,7 +172,7 @@ describe('User API', function () {
             .put(userRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(403, done);
+            .expect(401, done);
     });
 
     it('Delete unknown user: should fail', function (done) {
@@ -184,7 +185,7 @@ describe('User API', function () {
     it('Delete w/o Auth: should fail', function (done) {
         request(app)
             .delete(`${userRoute}/${userId}`)
-            .expect(403, done);
+            .expect(401, done);
     });
 
     it('Delete w Auth', function (done) {

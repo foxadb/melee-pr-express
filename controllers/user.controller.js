@@ -34,7 +34,7 @@ exports.registerUser = async function (req, res, next) {
         var createdUser = await UserService.registerUser(user);
         return res.status(201).json({ status: 201, data: createdUser, message: "Successfully created user" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: "User creation was unsuccessfull" });
+        return res.status(403).json({ status: 403, message: "User creation was unsuccessfull" });
     }
 };
 
@@ -54,7 +54,7 @@ exports.loginUser = async function (req, res, next) {
             var token = await jwt.sign(
                 { _id: loggedUser._id, username: loggedUser.username, role: loggedUser.role },
                 config.get('jwtsecret'), // private key
-                { expiresIn: 3600 } // 1 hour
+                { expiresIn: 36000 } // 1 hour
             );
             return res.status(200).json({ status: 200, token: token, message: "Authentication successfull"});
         }
@@ -94,7 +94,7 @@ exports.deleteUser = async function (req, res, next) {
         var deleted = await UserService.deleteUser(userId);
         return res.status(204).json({ status: 204, message: "Successfully deleted user" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: e.message });
+        return res.status(403).json({ status: 403, message: e.message });
     }
 };
 

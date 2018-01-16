@@ -1,6 +1,7 @@
+const app = require('../../app');
+
 const mocha = require('mocha');
 const request = require('supertest');
-const app = require('../../app');
 
 const chai = require('chai');
 const expect = chai.expect;
@@ -49,7 +50,7 @@ describe('Player API', function () {
             .post(playerRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(304, done);
+            .expect(401, done);
     });
     
     it('POST w Auth', function (done) {
@@ -82,7 +83,7 @@ describe('Player API', function () {
             .put(playerRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(403, done);
+            .expect(401, done);
     });
     
     it('PUT w Auth', function (done) {
@@ -97,7 +98,7 @@ describe('Player API', function () {
             .set('Authorization', token)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(204, done);
+            .expect(200, done);
     });
 
     it('GET/:unknown_id: should fail', function (done) {
@@ -127,13 +128,13 @@ describe('Player API', function () {
         request(app)
             .delete(`${playerRoute}/314159265359`)
             .set('Authorization', token)
-            .expect(204, done);
+            .expect(403, done);
     });
     
     it('DELETE w/o Auth: should fail', function (done) {
         request(app)
             .delete(`${playerRoute}/${playerId}`)
-            .expect(403, done);
+            .expect(401, done);
     });
 
     it('DELETE w Auth', function (done) {

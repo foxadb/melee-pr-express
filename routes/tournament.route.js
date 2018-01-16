@@ -13,7 +13,7 @@ router.post('/', UserController.managerOnly, TournamentController.createTourname
 router.put('/', UserController.managerOnly, TournamentController.updateTournament);
 
 // Map DELETE controller functions
-router.delete('/:id', UserController.managerOnly, TournamentController.removeTournament);
+router.delete('/:id', UserController.managerOnly, TournamentController.deleteTournament);
 
 // Export the Router
 module.exports = router;

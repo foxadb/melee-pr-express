@@ -51,7 +51,7 @@ exports.createTournament = async function (req, res, next) {
 exports.updateTournament = async function (req, res, next) {
     // Id is necessary for the update
     if (!req.body._id) {
-        return res.status(400).json({ status: 400., message: "Id must be present" });
+        return res.status(400).json({ status: 400, message: "Id must be present" });
     }
 
     var id = req.body._id;
@@ -68,11 +68,11 @@ exports.updateTournament = async function (req, res, next) {
         var updatedTournament = await TournamentService.updateTournament(tournament);
         return res.status(200).json({ status: 200, data: updatedTournament, message: "Successfully updated tournament" });
     } catch (e) {
-        return res.status(400).json({ status: 400., message: e.message });
+        return res.status(403).json({ status: 403, message: e.message });
     }
 };
 
-exports.removeTournament = async function (req, res, next) {
+exports.deleteTournament = async function (req, res, next) {
     // Tournament ID
     var tournamentId = req.params.id;
 
@@ -88,12 +88,15 @@ exports.removeTournament = async function (req, res, next) {
                 // Remove the match from player matches list
                 PlayerService.removeMatch(match.player1._id, matchId);
                 PlayerService.removeMatch(match.player2._id, matchId);
+
+                // Delete the match
+                MatchService.deleteMatch(matchId);
             });
         }
 
         var deleted = await TournamentService.deleteTournament(tournamentId);
         return res.status(204).json({ status: 204, message: "Successfully tournament deleted" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: e.message });
+        return res.status(403).json({ status: 403, message: e.message });
     }
 };

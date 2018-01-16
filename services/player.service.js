@@ -14,21 +14,21 @@ exports.getPlayers = async function (query, page, limit, ranking) {
         var players = await Player.paginate(query, options);
         return players;
     } catch (e) {
-        throw Error('Error while paginating players');
+        throw Error('Error occured while paginating players');
     }
 };
 
 exports.getPlayer = async function (id) {
     try {
         var player = await Player.findById(id);
-
-        if (player) {
-            return player;
-        } else {
-            throw Error;
+        
+        if (!player) {
+            throw Error("Player not found");
         }
+        
+        return player;
     } catch (e) {
-        throw Error('Player not found');
+        throw Error("Player not found");
     }
 };
 
@@ -45,7 +45,7 @@ exports.createPlayer = async function (player) {
         var savedPlayer = await newPlayer.save();
         return savedPlayer;
     } catch (e) {
-        throw Error("Error while creating player");
+        throw Error("Error occured while creating player");
     }
 };
 
@@ -81,11 +81,11 @@ exports.deletePlayer = async function (id) {
     try {
         var deleted = await Player.remove({ _id: id });
         if (deleted.result.n === 0) {
-            throw Error("Player could not be deleted")
+            throw Error("Player could not be deleted");
         }
         return deleted;
     } catch (e) {
-        throw Error("Error Occured while deleting the player");
+        throw Error("Error occured while deleting the player");
     }
 };
 
@@ -93,7 +93,7 @@ exports.addMatch = async function (playerId, matchId) {
     try {
         // Find the player
         var player = await Player.findById(playerId);
-        
+
         // Push the new match to the list
         player.matches.push(matchId);
 
@@ -108,7 +108,7 @@ exports.removeMatch = async function (playerId, matchId) {
     try {
         // Find the player
         var player = await Player.findById(playerId);
-        
+
         // Remove the match from the list
         let index = player.matches.indexOf(matchId);
         if (index > -1) {

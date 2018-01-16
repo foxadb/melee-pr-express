@@ -1,6 +1,7 @@
+const app = require('../../app');
+
 const mocha = require('mocha');
 const request = require('supertest');
-const app = require('../../app');
 
 const chai = require('chai');
 const expect = chai.expect;
@@ -56,7 +57,7 @@ describe('Tournament API', function () {
             .post(tournamentRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(304, done);
+            .expect(401, done);
     });
     
     it('POST', function (done) {
@@ -88,7 +89,7 @@ describe('Tournament API', function () {
             .put(tournamentRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(403, done);
+            .expect(401, done);
     });
     
     it('PUT', function (done) {
@@ -103,7 +104,7 @@ describe('Tournament API', function () {
             .set('Authorization', token)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(204, done);
+            .expect(200, done);
     });
 
     it('GET/:id', function (done) {
@@ -130,7 +131,7 @@ describe('Tournament API', function () {
     it('DELETE w/o Auth: should fail', function (done) {
         request(app)
             .delete(`${tournamentRoute}/${tournamentId}`)
-            .expect(403, done);
+            .expect(401, done);
     });
     
     it('DELETE', function (done) {
