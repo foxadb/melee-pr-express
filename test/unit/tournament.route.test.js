@@ -56,7 +56,7 @@ describe('Tournament API', function () {
             .post(tournamentRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(401, done);
+            .expect(304, done);
     });
     
     it('POST', function (done) {
@@ -88,7 +88,7 @@ describe('Tournament API', function () {
             .put(tournamentRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(401, done);
+            .expect(403, done);
     });
     
     it('PUT', function (done) {
@@ -103,7 +103,7 @@ describe('Tournament API', function () {
             .set('Authorization', token)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(200, done);
+            .expect(204, done);
     });
 
     it('GET/:id', function (done) {
@@ -124,13 +124,13 @@ describe('Tournament API', function () {
         request(app)
             .delete(`${tournamentRoute}/314159265359`)
             .set('Authorization', token)
-            .expect(404, done);
+            .expect(403, done);
     });
 
     it('DELETE w/o Auth: should fail', function (done) {
         request(app)
             .delete(`${tournamentRoute}/${tournamentId}`)
-            .expect(401, done);
+            .expect(403, done);
     });
     
     it('DELETE', function (done) {

@@ -49,7 +49,7 @@ describe('Player API', function () {
             .post(playerRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(401, done);
+            .expect(304, done);
     });
     
     it('POST w Auth', function (done) {
@@ -82,7 +82,7 @@ describe('Player API', function () {
             .put(playerRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(401, done);
+            .expect(403, done);
     });
     
     it('PUT w Auth', function (done) {
@@ -97,7 +97,7 @@ describe('Player API', function () {
             .set('Authorization', token)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(200, done);
+            .expect(204, done);
     });
 
     it('GET/:unknown_id: should fail', function (done) {
@@ -105,7 +105,7 @@ describe('Player API', function () {
             .get(`${playerRoute}/314159265359`)
             .set('Authorization', token)
             .expect('Content-Type', /json/)
-            .expect(200, done);
+            .expect(404, done);
     });
 
     it('GET/:id w/o Auth', function (done) {
@@ -133,7 +133,7 @@ describe('Player API', function () {
     it('DELETE w/o Auth: should fail', function (done) {
         request(app)
             .delete(`${playerRoute}/${playerId}`)
-            .expect(401, done);
+            .expect(403, done);
     });
 
     it('DELETE w Auth', function (done) {

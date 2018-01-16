@@ -113,7 +113,7 @@ describe('User API', function () {
             .post(`${userRoute}/register`)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(401, done);
+            .expect(403, done);
     });
 
     it('Register an admin w/o Auth: should fail', function (done) {
@@ -127,7 +127,7 @@ describe('User API', function () {
             .post(`${userRoute}/register`)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(401, done);
+            .expect(403, done);
     });
 
     it('Already existing username: should fail', function (done) {
@@ -142,7 +142,7 @@ describe('User API', function () {
             .set('Authorization', token)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(400, done);
+            .expect(403, done);
     });
 
     it('Update', function (done) {
@@ -158,7 +158,7 @@ describe('User API', function () {
             .set('Authorization', token)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(200, done);
+            .expect(204, done);
     });
 
     it('Update w/o Auth: should fail', function (done) {
@@ -171,20 +171,20 @@ describe('User API', function () {
             .put(userRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(401, done);
+            .expect(403, done);
     });
 
     it('Delete unknown user: should fail', function (done) {
         request(app)
             .delete(`${userRoute}/314159265359`)
             .set('Authorization', token)
-            .expect(204, done);
+            .expect(403, done);
     });
 
     it('Delete w/o Auth: should fail', function (done) {
         request(app)
             .delete(`${userRoute}/${userId}`)
-            .expect(401, done);
+            .expect(403, done);
     });
 
     it('Delete w Auth', function (done) {

@@ -47,7 +47,7 @@ describe('Match API', function () {
             .expect(function (res) {
                 tournamentId = res.body.data._id;
             })
-            .expect(201)
+            .expect(204)
             .then(
 
             request(app)
@@ -58,14 +58,14 @@ describe('Match API', function () {
                 .expect(function (res) {
                     player1Id = res.body.data._id;
                 })
-                .expect(201)
+                .expect(204)
                 .then(
 
                 request(app)
                     .post(playerRoute)
                     .send(player2)
                     .expect('Content-Type', /json/)
-                    .expect(401, done)
+                    .expect(403, done)
                 )
             );
     });
@@ -83,14 +83,14 @@ describe('Match API', function () {
             .expect(function (res) {
                 tournamentId = res.body.data._id;
             })
-            .expect(201)
+            .expect(204)
             .then(
 
             request(app)
                 .post(playerRoute)
                 .send(player1)
                 .expect('Content-Type', /json/)
-                .expect(401)
+                .expect(403)
                 .then(
 
                 request(app)
@@ -101,7 +101,7 @@ describe('Match API', function () {
                     .expect(function (res) {
                         player2Id = res.body.data._id;
                     })
-                    .expect(201, done)
+                    .expect(204, done)
                 )
             );
     });
@@ -115,7 +115,7 @@ describe('Match API', function () {
             .post(tournamentRoute)
             .send(tournament)
             .expect('Content-Type', /json/)
-            .expect(401)
+            .expect(403)
             .then(
 
             request(app)
@@ -126,7 +126,7 @@ describe('Match API', function () {
                 .expect(function (res) {
                     player1Id = res.body.data._id;
                 })
-                .expect(201)
+                .expect(204)
                 .then(
 
                 request(app)
@@ -137,7 +137,7 @@ describe('Match API', function () {
                     .expect(function (res) {
                         player2Id = res.body.data._id;
                     })
-                    .expect(201, done)
+                    .expect(204, done)
                 )
             );
     });
@@ -155,7 +155,7 @@ describe('Match API', function () {
             .expect(function (res) {
                 tournamentId = res.body.data._id;
             })
-            .expect(201)
+            .expect(204)
             .then(
 
             request(app)
@@ -166,7 +166,7 @@ describe('Match API', function () {
                 .expect(function (res) {
                     player1Id = res.body.data._id;
                 })
-                .expect(201)
+                .expect(204)
                 .then(
 
                 request(app)
@@ -177,7 +177,7 @@ describe('Match API', function () {
                     .expect(function (res) {
                         player2Id = res.body.data._id;
                     })
-                    .expect(201, done)
+                    .expect(204, done)
                 )
             );
     });
@@ -212,7 +212,7 @@ describe('Match API', function () {
             .post(matchRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(401, done);
+            .expect(304, done);
     });
 
     it('POST', function (done) {
@@ -245,7 +245,7 @@ describe('Match API', function () {
             .put(matchRoute)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(401, done);
+            .expect(403, done);
     });
 
     it('PUT w Auth', function (done) {
@@ -259,7 +259,7 @@ describe('Match API', function () {
             .set('Authorization', token)
             .send(body)
             .expect('Content-Type', /json/)
-            .expect(200, done);
+            .expect(204, done);
     });
 
     it('GET/:id w Auth', function (done) {
@@ -289,13 +289,13 @@ describe('Match API', function () {
         request(app)
             .delete(`${matchRoute}/314159265359`)
             .set('Authorization', token)
-            .expect(404, done);
+            .expect(403, done);
     });
 
     it('DELETE w/o Auth: should fail', function (done) {
         request(app)
             .delete(`${matchRoute}/${matchId}`)
-            .expect(401, done);
+            .expect(403, done);
     });
 
     it('DELETE w Auth', function (done) {
