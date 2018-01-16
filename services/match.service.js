@@ -18,10 +18,16 @@ exports.getMatch = async function (id) {
             .populate('player1', ['name', 'mains'])
             .populate('player2', ['name', 'mains'])
             .populate('tournament', ['name']);
-        return match;
+        
+        if (match) {
+            return match;
+        } else {
+            throw Error;
+        }
     } catch (e) {
-        throw Error('Error while paginating match');
+        throw Error('Match not found');
     }
+
 };
 
 exports.createMatch = async function (match) {

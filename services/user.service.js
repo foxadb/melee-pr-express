@@ -10,6 +10,20 @@ exports.getUsers = async function () {
     }
 };
 
+exports.getUser = async function (id) {
+    try {
+        var user = await User.findById(id).select({ username: 1, role: 1 });
+
+        if (user) {
+            return user;
+        } else {
+            throw Error;
+        }
+    } catch (e) {
+        throw Error('User not found');
+    }
+};
+
 exports.registerUser = async function (user) {
     try {
         // Creating a new user with the hashed password

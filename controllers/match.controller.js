@@ -27,7 +27,7 @@ exports.getMatch = async function (req, res, next) {
         var player = await MatchService.getMatch(id);
         return res.status(200).json({ status: 200, data: player, message: "Successfully match received" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: e.message });
+        return res.status(404).json({ status: 404, message: e.message });
     }
 };
 

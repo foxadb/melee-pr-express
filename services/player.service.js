@@ -21,9 +21,14 @@ exports.getPlayers = async function (query, page, limit, ranking) {
 exports.getPlayer = async function (id) {
     try {
         var player = await Player.findById(id);
-        return player;
+
+        if (player) {
+            return player;
+        } else {
+            throw Error;
+        }
     } catch (e) {
-        throw Error('Error while finding the player');
+        throw Error('Player not found');
     }
 };
 

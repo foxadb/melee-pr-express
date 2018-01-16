@@ -11,6 +11,18 @@ exports.getUsers = async function (req, res, next) {
     }
 };
 
+exports.getUser = async function (req, res, next) {
+    // Tournament ID
+    var id = req.params.id;
+
+    try {
+        var user = await UserService.getUser(id);
+        return res.status(200).json({ status: 200, data: user, message: "Successfully user received" });
+    } catch (e) {
+        return res.status(404).json({ status: 404, message: e.message });
+    }
+};
+
 exports.registerUser = async function (req, res, next) {
     var user = {
         username: req.body.username,
