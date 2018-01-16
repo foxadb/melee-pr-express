@@ -139,7 +139,7 @@ describe('UserService', function () {
 
     });
 
-    after('databse drop', function (done) {
+    after('database drop', function (done) {
         mongoose.connection.db.dropDatabase(done);
     });
 

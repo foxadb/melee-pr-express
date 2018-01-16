@@ -28,7 +28,15 @@ describe('Tournament API', function () {
             .expect(200, done);
     });
 
-    it('GET', function (done) {
+    it('GET w Auth', function (done) {
+        request(app)
+            .get(tournamentRoute)
+            .set('Authorization', token)
+            .expect('Content-Type', /json/)
+            .expect(200, done);
+    });
+
+    it('GET w/o Auth', function (done) {
         request(app)
             .get(tournamentRoute)
             .expect('Content-Type', /json/)
@@ -36,6 +44,20 @@ describe('Tournament API', function () {
     });
     
     var tournamentId;
+
+    it('POST w/o Auth: should fail', function (done) {
+        let body = {
+            name: 'Test Tournament',
+            organiser: 'Test Organiser',
+            location: 'Lyon'
+        };
+
+        request(app)
+            .post(tournamentRoute)
+            .send(body)
+            .expect('Content-Type', /json/)
+            .expect(401, done);
+    });
     
     it('POST', function (done) {
         let body = {
@@ -53,6 +75,20 @@ describe('Tournament API', function () {
                 tournamentId = res.body.data._id;
             })
             .expect(201, done);
+    });
+
+    it('PUT w/o Auth: should fail', function (done) {
+        let body = {
+            _id: tournamentId,
+            name: 'Updated Test Tournament',
+            location: 'Montpellier'
+        };
+
+        request(app)
+            .put(tournamentRoute)
+            .send(body)
+            .expect('Content-Type', /json/)
+            .expect(401, done);
     });
     
     it('PUT', function (done) {
@@ -73,17 +109,28 @@ describe('Tournament API', function () {
     it('GET/:id', function (done) {
         request(app)
             .get(`${tournamentRoute}/${tournamentId}`)
-            .set('Authorization', token)
             .expect('Content-Type', /json/)
             .expect(200, done);
     });
 
-    it('GET/:unknown_id', function (done) {
+    it('GET/:unknown_id: should fail', function (done) {
         request(app)
-            .get(`${tournamentRoute}/7894556123`)
-            .set('Authorization', token)
+            .get(`${tournamentRoute}/314159265359`)
             .expect('Content-Type', /json/)
-            .expect(400, done);
+            .expect(404, done);
+    });
+
+    it('DELETE an unknown tournament: should fail', function (done) {
+        request(app)
+            .delete(`${tournamentRoute}/314159265359`)
+            .set('Authorization', token)
+            .expect(404, done);
+    });
+
+    it('DELETE w/o Auth: should fail', function (done) {
+        request(app)
+            .delete(`${tournamentRoute}/${tournamentId}`)
+            .expect(401, done);
     });
     
     it('DELETE', function (done) {
@@ -91,13 +138,6 @@ describe('Tournament API', function () {
             .delete(`${tournamentRoute}/${tournamentId}`)
             .set('Authorization', token)
             .expect(204, done);
-    });
-    
-    it('DELETE an unknown tournament', function (done) {
-        request(app)
-            .delete(`${tournamentRoute}/7894556123`)
-            .set('Authorization', token)
-            .expect(400, done);
     });
 
 });

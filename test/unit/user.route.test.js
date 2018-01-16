@@ -174,9 +174,9 @@ describe('User API', function () {
             .expect(401, done);
     });
 
-    it('Delete', function (done) {
+    it('Delete unknown user: should fail', function (done) {
         request(app)
-            .delete(`${userRoute}/${userId}`)
+            .delete(`${userRoute}/314159265359`)
             .set('Authorization', token)
             .expect(204, done);
     });
@@ -185,6 +185,13 @@ describe('User API', function () {
         request(app)
             .delete(`${userRoute}/${userId}`)
             .expect(401, done);
+    });
+
+    it('Delete w Auth', function (done) {
+        request(app)
+            .delete(`${userRoute}/${userId}`)
+            .set('Authorization', token)
+            .expect(204, done);
     });
 
 });

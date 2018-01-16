@@ -34,6 +34,114 @@ describe('Match API', function () {
     var player1Id;
     var player2Id;
 
+    it('Create a Tournament and 2 Players w/o Auth on Player2: should fail', function (done) {
+        let tournament = { name: 'Test Tournament' };
+        let player1 = { name: 'Test Player 1' };
+        let player2 = { name: 'Test Player 2' };
+
+        request(app)
+            .post(tournamentRoute)
+            .set('Authorization', token)
+            .send(tournament)
+            .expect('Content-Type', /json/)
+            .expect(function (res) {
+                tournamentId = res.body.data._id;
+            })
+            .expect(201)
+            .then(
+
+            request(app)
+                .post(playerRoute)
+                .set('Authorization', token)
+                .send(player1)
+                .expect('Content-Type', /json/)
+                .expect(function (res) {
+                    player1Id = res.body.data._id;
+                })
+                .expect(201)
+                .then(
+
+                request(app)
+                    .post(playerRoute)
+                    .send(player2)
+                    .expect('Content-Type', /json/)
+                    .expect(401, done)
+                )
+            );
+    });
+
+    it('Create a Tournament and 2 Players w/o Auth on Player1: should fail', function (done) {
+        let tournament = { name: 'Test Tournament' };
+        let player1 = { name: 'Test Player 1' };
+        let player2 = { name: 'Test Player 2' };
+
+        request(app)
+            .post(tournamentRoute)
+            .set('Authorization', token)
+            .send(tournament)
+            .expect('Content-Type', /json/)
+            .expect(function (res) {
+                tournamentId = res.body.data._id;
+            })
+            .expect(201)
+            .then(
+
+            request(app)
+                .post(playerRoute)
+                .send(player1)
+                .expect('Content-Type', /json/)
+                .expect(401)
+                .then(
+
+                request(app)
+                    .post(playerRoute)
+                    .set('Authorization', token)
+                    .send(player2)
+                    .expect('Content-Type', /json/)
+                    .expect(function (res) {
+                        player2Id = res.body.data._id;
+                    })
+                    .expect(201, done)
+                )
+            );
+    });
+
+    it('Create a Tournament and 2 Players w/o Auth on Tournament: should fail', function (done) {
+        let tournament = { name: 'Test Tournament' };
+        let player1 = { name: 'Test Player 1' };
+        let player2 = { name: 'Test Player 2' };
+
+        request(app)
+            .post(tournamentRoute)
+            .send(tournament)
+            .expect('Content-Type', /json/)
+            .expect(401)
+            .then(
+
+            request(app)
+                .post(playerRoute)
+                .set('Authorization', token)
+                .send(player1)
+                .expect('Content-Type', /json/)
+                .expect(function (res) {
+                    player1Id = res.body.data._id;
+                })
+                .expect(201)
+                .then(
+
+                request(app)
+                    .post(playerRoute)
+                    .set('Authorization', token)
+                    .send(player2)
+                    .expect('Content-Type', /json/)
+                    .expect(function (res) {
+                        player2Id = res.body.data._id;
+                    })
+                    .expect(201, done)
+                )
+            );
+    });
+
     it('Create a Tournament and 2 Players', function (done) {
         let tournament = { name: 'Test Tournament' };
         let player1 = { name: 'Test Player 1' };
@@ -74,7 +182,15 @@ describe('Match API', function () {
             );
     });
 
-    it('GET', function (done) {
+    it('GET w Auth', function (done) {
+        request(app)
+            .get(matchRoute)
+            .set('Authorization', token)
+            .expect('Content-Type', /json/)
+            .expect(200, done);
+    });
+
+    it('GET w/o Auth', function (done) {
         request(app)
             .get(matchRoute)
             .expect('Content-Type', /json/)
@@ -82,6 +198,22 @@ describe('Match API', function () {
     });
 
     var matchId;
+
+    it('POST w/o Auth: should fail', function (done) {
+        let body = {
+            player1: player1Id,
+            player2: player2Id,
+            score1: 3,
+            score2: 1,
+            tournament: tournamentId
+        };
+
+        request(app)
+            .post(matchRoute)
+            .send(body)
+            .expect('Content-Type', /json/)
+            .expect(401, done);
+    });
 
     it('POST', function (done) {
         let body = {
@@ -103,7 +235,20 @@ describe('Match API', function () {
             .expect(201, done);
     });
 
-    it('PUT', function (done) {
+    it('PUT w/o Auth: should fail', function (done) {
+        let body = {
+            _id: matchId,
+            score2: 0
+        };
+
+        request(app)
+            .put(matchRoute)
+            .send(body)
+            .expect('Content-Type', /json/)
+            .expect(401, done);
+    });
+
+    it('PUT w Auth', function (done) {
         let body = {
             _id: matchId,
             score2: 0
@@ -117,7 +262,7 @@ describe('Match API', function () {
             .expect(200, done);
     });
 
-    it('GET/:id', function (done) {
+    it('GET/:id w Auth', function (done) {
         request(app)
             .get(`${matchRoute}/${matchId}`)
             .set('Authorization', token)
@@ -125,7 +270,35 @@ describe('Match API', function () {
             .expect(200, done);
     });
 
-    it('DELETE', function (done) {
+    it('GET/:id w/o Auth', function (done) {
+        request(app)
+            .get(`${matchRoute}/${matchId}`)
+            .expect('Content-Type', /json/)
+            .expect(200, done);
+    });
+
+    it('GET/:unknown_id: should fail', function (done) {
+        request(app)
+            .get(`${matchRoute}/314159265359`)
+            .set('Authorization', token)
+            .expect('Content-Type', /json/)
+            .expect(404, done);
+    });
+
+    it('DELETE unknown match: should fail', function (done) {
+        request(app)
+            .delete(`${matchRoute}/314159265359`)
+            .set('Authorization', token)
+            .expect(404, done);
+    });
+
+    it('DELETE w/o Auth: should fail', function (done) {
+        request(app)
+            .delete(`${matchRoute}/${matchId}`)
+            .expect(401, done);
+    });
+
+    it('DELETE w Auth', function (done) {
         request(app)
             .delete(`${matchRoute}/${matchId}`)
             .set('Authorization', token)
