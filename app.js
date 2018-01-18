@@ -31,14 +31,24 @@ mongoose.connect(mongodbUrl, { useMongoClient: true }).then(
 // Default admin creation (you should create a new admin account when logged and delete this one)
 require('./config/adminseed');
 
-// Helmet
+// Helmet Security Headers
 app.use(helmet());
 
 // Enable CORS
+var corsWhitelist = [
+  'http://localhost:4200',  // Angular Client
+  'http://localhost:49152'  // E2E Test Client
+];
 var corsOptions = {
-  origin: 'http://localhost:4200',
+  origin: function (origin, callback) {
+    if (corsWhitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   optionsSuccessStatus: 200
-}
+};
 app.use(cors(corsOptions));
 
 console.log("Creating node server on http://localhost:3000");
