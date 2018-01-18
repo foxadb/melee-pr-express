@@ -1,5 +1,3 @@
-// Create a default admin user
-
 const UserService = require('../services/user.service');
 
 var admin = {
@@ -8,4 +6,12 @@ var admin = {
     role: "admin"
 };
 
-UserService.registerUser(admin);
+// Create a default admin user
+UserService.registerUser(admin).then(
+    user => console.log("Default admin created:\n",
+        admin,
+        "\nYou should create a new admin account ASAP and delete this one"
+    ),
+    error => console.log("Default admin credentials:\n",
+        admin)
+);

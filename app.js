@@ -28,8 +28,8 @@ mongoose.connect(mongodbUrl, { useMongoClient: true }).then(
   err => console.log(`Error Connecting to the MongoDB Database at: ${mongodbUrl}`)
 );
 
-// Default admin (comment after first server launch)
-// require('./config/adminseed');
+// Default admin creation (you should create a new admin account when logged and delete this one)
+require('./config/adminseed');
 
 // Helmet
 app.use(helmet());
