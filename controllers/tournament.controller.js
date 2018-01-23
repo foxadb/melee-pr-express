@@ -61,6 +61,7 @@ exports.updateTournament = async function (req, res, next) {
         name: req.body.name,
         location: req.body.location,
         organiser: req.body.organiser,
+        date: req.body.date,
         matches: req.body.matches
     };
 
