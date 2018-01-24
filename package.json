@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=production nodemon ./bin/www",
+    "test-server": "NODE_ENV=test nodemon ./bin/www",
     "unit-tests": "NODE_ENV=test mocha test/unit-tests.js --exit",
     "load-tests": "artillery run test/load.yml"
   },
