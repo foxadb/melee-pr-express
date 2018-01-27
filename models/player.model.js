@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 
 const PlayerSchema = new mongoose.Schema({
-    name: { type: String, maxlength: 24, required: true },
+    name: { type: String, maxlength: 24, required: true, unique: true },
     mains: [{ type: String, maxlength: 8 }],
     score: { type: Number, default: 1000 },
     location: { type: String, maxlength: 24 },
