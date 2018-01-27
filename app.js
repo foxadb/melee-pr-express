@@ -36,6 +36,7 @@ app.use(helmet());
 
 // Enable CORS
 var corsWhitelist = [
+  undefined, // Remove it to disallow local API request
   'http://localhost:4200',  // Angular Client
   'http://localhost:49152'  // E2E Test Client
 ];
