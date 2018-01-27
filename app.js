@@ -21,14 +21,23 @@ const mongoose = require('mongoose');
 mongoose.Promise = bluebird;
 var mongodbUrl = 'mongodb://' + config.get('mongodb.host') + ':' + config.get('mongodb.port') + '/' + config.get('mongodb.name');
 mongoose.connect(mongodbUrl, { useMongoClient: true }).then(
-  () => {
-    console.log(`Successfully connected to the MongoDB Database at: ${mongodbUrl}`);
+  res => {
+    console.log(`Successfully connected to the MongoDB Database at: ${mongodbUrl}\n`);
+
+    // Drop test database on creation
+    if (process.env.NODE_ENV === 'test') {
+      mongoose.connection.db.dropDatabase().then(
+        res => console.log('Successfully drop the test database\n'),
+        err => console.log('Error when dropping the test database\n')
+      );
+    }
+    
     app.emit("appStarted");
   },
-  err => console.log(`Error Connecting to the MongoDB Database at: ${mongodbUrl}`)
+  err => console.log(`Error Connecting to the MongoDB Database at: ${mongodbUrl}\n`)
 );
 
-// Default admin creation (you should create a new admin account when logged and delete this one)
+// Default initialization
 require('./config/adminseed');
 
 // Helmet Security Headers
