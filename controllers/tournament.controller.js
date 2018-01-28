@@ -44,7 +44,7 @@ exports.createTournament = async function (req, res, next) {
         var createdTournament = await TournamentService.createTournament(tournament);
         return res.status(201).json({ status: 201, data: createdTournament, message: "Successfully created tournament" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: "Tournament creation was unsuccessfull" });
+        return res.status(400).json({ status: 400, message: e.message });
     }
 };
 

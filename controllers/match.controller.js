@@ -56,7 +56,7 @@ exports.createMatch = async function (req, res, next) {
         // Return success result
         return res.status(201).json({ status: 201, data: createdMatch, message: "Successfully created match" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: "Match creation was unsuccessfull" });
+        return res.status(400).json({ status: 400, message: e.message });
     }
 };
 

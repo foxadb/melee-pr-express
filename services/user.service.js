@@ -6,7 +6,7 @@ exports.getUsers = async function () {
         var users = await User.find().select({ username: 1, role: 1});
         return users;
     } catch (e) {
-        throw Error('Error while paginating users');
+        throw Error('Invalid parameters');
     }
 };
 
@@ -39,7 +39,7 @@ exports.registerUser = async function (user) {
         var savedUser = await newUser.save();
         return savedUser;
     } catch (e) {
-        throw Error("Error while register user");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -56,7 +56,7 @@ exports.loginUser = async function (user) {
             return undefined;
         }
     } catch (e) {
-        throw Error("Error while sign in user");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -65,7 +65,7 @@ exports.updateUser = async function (user) {
         // Find the old User Object by the Id
         var oldUser = await User.findById(user._id);
     } catch (e) {
-        throw Error("Error occured while finding the user");
+        throw Error('User not found');
     }
 
     // If no old User Object exists return false
@@ -86,7 +86,7 @@ exports.updateUser = async function (user) {
         var savedUser = await oldUser.save();
         return savedUser;
     } catch (e) {
-        throw Error("Error occured while updating the tournament");
+        throw Error('Invalid parameters');
     }
 }
 
@@ -95,11 +95,11 @@ exports.deleteUser = async function (id) {
         var deleted = await User.remove({ _id: id });
         
         if (deleted.result.n === 0) {
-            throw Error("User could not be deleted")
+            throw Error('User could not be deleted');
         }
 
         return deleted;
     } catch (e) {
-        throw Error("Error Occured while deleting the user");
+        throw Error('Invalid parameters');
     }
 };

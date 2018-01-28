@@ -42,7 +42,7 @@ exports.createPlayer = async function (req, res, next) {
         var createdPlayer = await PlayerService.createPlayer(player);
         return res.status(201).json({ status: 201, data: createdPlayer, message: "Successfully created player" });
     } catch (e) {
-        return res.status(400).json({ status: 400, message: "Player creation was unsuccessfull" });
+        return res.status(400).json({ status: 400, message: e.message });
     }
 };
 

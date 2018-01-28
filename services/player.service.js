@@ -14,7 +14,7 @@ exports.getPlayers = async function (query, page, limit, ranking) {
         var players = await Player.paginate(query, options);
         return players;
     } catch (e) {
-        throw Error('Error occured while paginating players');
+        throw Error('Invalid parameters');
     }
 };
 
@@ -23,12 +23,12 @@ exports.getPlayer = async function (id) {
         var player = await Player.findById(id);
         
         if (!player) {
-            throw Error("Player not found");
+            throw Error('Player not found');
         }
         
         return player;
     } catch (e) {
-        throw Error("Player not found");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -45,7 +45,7 @@ exports.createPlayer = async function (player) {
         var savedPlayer = await newPlayer.save();
         return savedPlayer;
     } catch (e) {
-        throw Error("Error occured while creating player");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -54,7 +54,7 @@ exports.updatePlayer = async function (player) {
         // Find the old Player Object by the Id
         var oldPlayer = await Player.findById(player.id);
     } catch (e) {
-        throw Error("Error occured while finding the player");
+        throw Error('Player not found');
     }
 
     // If no old Player Object exists return false
@@ -73,7 +73,7 @@ exports.updatePlayer = async function (player) {
         var savedPlayer = await oldPlayer.save();
         return savedPlayer;
     } catch (e) {
-        throw Error("Error occured while updating the player");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -81,11 +81,11 @@ exports.deletePlayer = async function (id) {
     try {
         var deleted = await Player.remove({ _id: id });
         if (deleted.result.n === 0) {
-            throw Error("Player could not be deleted");
+            throw Error('Player could not be deleted');
         }
         return deleted;
     } catch (e) {
-        throw Error("Error occured while deleting the player");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -100,7 +100,7 @@ exports.addMatch = async function (playerId, matchId) {
         var savedPlayer = player.save();
         return savedPlayer;
     } catch (e) {
-        throw Error("Error occured while adding a player match");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -121,7 +121,7 @@ exports.removeMatch = async function (playerId, matchId) {
         // Return the player
         return player;
     } catch (e) {
-        throw Error("Error occured while removing a player match");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -159,6 +159,6 @@ exports.updateEloRank = async function (match) {
         await player1.save();
         await player2.save();
     } catch (e) {
-        throw Error("Error occured while updating the Elo Rank");
+        throw Error('Invalid parameters');
     }
 };

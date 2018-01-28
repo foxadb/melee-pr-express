@@ -36,9 +36,9 @@ describe('Match API', function () {
     var player2Id;
 
     it('Create a Tournament and 2 Players w/o Auth on Player2: should fail', function (done) {
-        let tournament = { name: 'Test Tournament' };
-        let player1 = { name: 'Test Player 1' };
-        let player2 = { name: 'Test Player 2' };
+        let tournament = { name: 'Test Tournament 1' };
+        let player1 = { name: 'Test Player 1-1' };
+        let player2 = { name: 'Test Player 1-2' };
 
         request(app)
             .post(tournamentRoute)
@@ -72,9 +72,9 @@ describe('Match API', function () {
     });
 
     it('Create a Tournament and 2 Players w/o Auth on Player1: should fail', function (done) {
-        let tournament = { name: 'Test Tournament' };
-        let player1 = { name: 'Test Player 1' };
-        let player2 = { name: 'Test Player 2' };
+        let tournament = { name: 'Test Tournament 2' };
+        let player1 = { name: 'Test Player 2-1' };
+        let player2 = { name: 'Test Player 2-2' };
 
         request(app)
             .post(tournamentRoute)
@@ -108,9 +108,9 @@ describe('Match API', function () {
     });
 
     it('Create a Tournament and 2 Players w/o Auth on Tournament: should fail', function (done) {
-        let tournament = { name: 'Test Tournament' };
-        let player1 = { name: 'Test Player 1' };
-        let player2 = { name: 'Test Player 2' };
+        let tournament = { name: 'Test Tournament 3' };
+        let player1 = { name: 'Test Player 3-1' };
+        let player2 = { name: 'Test Player 3-2' };
 
         request(app)
             .post(tournamentRoute)
@@ -144,9 +144,9 @@ describe('Match API', function () {
     });
 
     it('Create a Tournament and 2 Players', function (done) {
-        let tournament = { name: 'Test Tournament' };
-        let player1 = { name: 'Test Player 1' };
-        let player2 = { name: 'Test Player 2' };
+        let tournament = { name: 'Test Tournament 4' };
+        let player1 = { name: 'Test Player 4-1' };
+        let player2 = { name: 'Test Player 4-2' };
 
         request(app)
             .post(tournamentRoute)

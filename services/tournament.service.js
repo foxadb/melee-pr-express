@@ -8,7 +8,7 @@ exports.getTournaments = async function (query, page, limit) {
         var tournaments = await Tournament.paginate(query, options);
         return tournaments;
     } catch (e) {
-        throw Error('Error while paginating tournaments');
+        throw Error('Invalid parameters');
     }
 };
 
@@ -40,7 +40,7 @@ exports.createTournament = async function (tournament) {
         var savedTournament = await newTournament.save();
         return savedTournament;
     } catch (e) {
-        throw Error("Error while creating tournament");
+        throw Error('Invalid parameters');
     }
 }
 
@@ -49,7 +49,7 @@ exports.updateTournament = async function (tournament) {
         // Find the old Tournament Object by the Id
         var oldTournament = await Tournament.findById(tournament.id);
     } catch (e) {
-        throw Error("Error occured while finding the tournament");
+        throw Error('Tournament not found');
     }
 
     // If no old Tournament Object exists return false
@@ -68,7 +68,7 @@ exports.updateTournament = async function (tournament) {
         var savedTournament = await oldTournament.save();
         return savedTournament;
     } catch (e) {
-        throw Error("Error occured while updating the tournament");
+        throw Error('Invalid parameters');
     }
 }
 
@@ -76,11 +76,11 @@ exports.deleteTournament = async function (id) {
     try {
         var deleted = await Tournament.remove({ _id: id });
         if (deleted.result.n === 0) {
-            throw Error("Tournament could not be deleted");
+            throw Error('Tournament could not be deleted');
         }
         return deleted;
     } catch (e) {
-        throw Error("Error occured while deleting the tournament");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -96,7 +96,7 @@ exports.addMatch = async function (tournamentId, matchId) {
         var savedTournament = await tournament.save();
         return savedTournament;
     } catch (e) {
-        throw Error("Error occured while adding a match to a tournament");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -112,6 +112,6 @@ exports.removeMatch = async function (tournamentId, matchId) {
         await tournament.save();
         return tournament;
     } catch (e) {
-        throw Error("Error occured while removing a match from a tournament");
+        throw Error('Invalid parameters');
     }
 };

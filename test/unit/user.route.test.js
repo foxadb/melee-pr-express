@@ -77,7 +77,6 @@ describe('User API', function () {
             .send(body)
             .expect('Content-Type', /json/)
             .expect(function (res) {
-                console.log(res);
                 userId = res.body.data._id;
             })
             .expect(201, done);

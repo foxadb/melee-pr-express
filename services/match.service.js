@@ -8,7 +8,7 @@ exports.getMatches = async function (query, page, limit) {
         var matches = await Match.paginate(query, options);
         return matches;
     } catch (e) {
-        throw Error('Error when paginating matches');
+        throw Error('Invalid parameters');
     }
 };
 
@@ -18,7 +18,7 @@ exports.getMatch = async function (id) {
             .populate('player1', ['name', 'mains'])
             .populate('player2', ['name', 'mains'])
             .populate('tournament', ['name']);
-        
+
         if (match) {
             return match;
         } else {
@@ -39,12 +39,17 @@ exports.createMatch = async function (match) {
         tournament: match.tournament
     });
 
+    // Avoid match with the same player
+    if (match.player1 === match.player2) {
+        throw Error('Player must be different');
+    }
+
     try {
         // Saving the Match 
         var savedMatch = await newMatch.save();
         return savedMatch;
     } catch (e) {
-        throw Error("Error while creating the match");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -53,7 +58,7 @@ exports.updateMatch = async function (match) {
         // Find the old Match Object by the Id
         var oldMatch = await Match.findById(match.id);
     } catch (e) {
-        throw Error("Error occured while finding the match");
+        throw Error('Match not found');
     }
 
     // If no old Match Object exists return false
@@ -72,7 +77,7 @@ exports.updateMatch = async function (match) {
         var savedMatch = await oldMatch.save();
         return savedMatch;
     } catch (e) {
-        throw Error("Error occured while updating the match");
+        throw Error('Invalid parameters');
     }
 };
 
@@ -80,10 +85,10 @@ exports.deleteMatch = async function (id) {
     try {
         var deleted = await Match.remove({ _id: id });
         if (deleted.result.n === 0) {
-            throw Error("Match could not be deleted");
+            throw Error('Match could not be deleted');
         }
         return deleted;
     } catch (e) {
-        throw Error("Error occured while deleting the match");
+        throw Error('Error occured while deleting the match');
     }
 };
