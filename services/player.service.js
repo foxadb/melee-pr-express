@@ -21,11 +21,11 @@ exports.getPlayers = async function (query, page, limit, ranking) {
 exports.getPlayer = async function (id) {
     try {
         var player = await Player.findById(id);
-        
+
         if (!player) {
             throw Error('Player not found');
         }
-        
+
         return player;
     } catch (e) {
         throw Error('Invalid parameters');
@@ -120,6 +120,7 @@ exports.removeMatch = async function (playerId, matchId) {
         // Return the player
         return player;
     } catch (e) {
+        console.log(e);
         throw Error('Invalid parameters');
     }
 };

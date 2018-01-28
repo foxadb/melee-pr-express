@@ -101,16 +101,22 @@ exports.addMatch = async function (tournamentId, matchId) {
 
 exports.removeMatch = async function (tournamentId, matchId) {
     try {
-        // Find the player
+        // Find the tournament
         var tournament = await Tournament.findById(tournamentId);
 
         // Remove the match from the list
-        tournament.matches = tournament.matches.filter(match => match != matchId);
+        let index = tournament.matches.indexOf(matchId);
+        if (index > -1) {
+            tournament.matches.splice(index, 1);
+        }
 
         // Save to the database
         await tournament.save();
+
+        // Return the tournament
         return tournament;
     } catch (e) {
+        console.log(e);
         throw Error('Invalid parameters');
     }
 };

@@ -3,6 +3,11 @@ Super Smash Bros. Melee Power Ranking REST API designed with Express.js.
 
 ## Instructions
 
+### Requirements
+
+node >= 9.x
+npm >= 5.x
+
 ### Installation
 
 Install project dependencies with `npm install`
@@ -146,7 +151,15 @@ Use ``api/user`` for authentication.
 
 POST, PUT and DELETE are restricted with authentication system (need a JSON Web Token).
 
-**``matches`` field in the POST/PUT requests could be destructive. It has been disable for editing to avoid database corruption! You cannot edit ``player1`` and ``player2`` fields of a match for the same reason**
+**``matches`` field in the POST/PUT requests could be destructive. It has been disable for editing to avoid database corruption!**
+**You cannot edit ``player1`` and ``player2`` fields of a match for the same reason**
+
+#### HTTP request examples
+
+To get player id `509637a41d5q7az697d1417az5` data:
+```
+GET http://localhost:3000/api/player/509637a41d5q7az697d1417az5
+```
 
 #### Roles
 
