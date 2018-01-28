@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 exports.getUsers = async function (req, res, next) {
     try {
         var users = await UserService.getUsers();
-        return res.status(200).json({ status: 200, data: users, message: "Successfully users received" });
+        return res.status(200).json({ status: 200, data: users, message: 'Successfully users received' });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
@@ -17,7 +17,7 @@ exports.getUser = async function (req, res, next) {
 
     try {
         var user = await UserService.getUser(id);
-        return res.status(200).json({ status: 200, data: user, message: "Successfully user received" });
+        return res.status(200).json({ status: 200, data: user, message: 'Successfully user received' });
     } catch (e) {
         return res.status(404).json({ status: 404, message: e.message });
     }
@@ -32,9 +32,9 @@ exports.registerUser = async function (req, res, next) {
 
     try {
         var createdUser = await UserService.registerUser(user);
-        return res.status(201).json({ status: 201, data: createdUser, message: "Successfully created user" });
+        return res.status(201).json({ status: 201, data: createdUser, message: 'Successfully created user' });
     } catch (e) {
-        return res.status(403).json({ status: 403, message: "User creation was unsuccessfull" });
+        return res.status(403).json({ status: 403, message: e.message });
     }
 };
 
@@ -48,25 +48,25 @@ exports.loginUser = async function (req, res, next) {
         var loggedUser = await UserService.loginUser(user);
 
         if (!loggedUser) {
-            return res.status(401).json({ status: 401, message: "Authentication failed. Wrong username or password" });
+            return res.status(401).json({ status: 401, message: 'Authentication failed. Wrong username or password' });
         } else {
             // JSON Web Token
             var token = await jwt.sign(
                 { _id: loggedUser._id, username: loggedUser.username, role: loggedUser.role },
                 config.get('jwtsecret'), // private key
-                { expiresIn: 36000 } // 1 hour
+                { expiresIn: 3600 } // 1 hour
             );
-            return res.status(200).json({ status: 200, token: token, message: "Authentication successfull"});
+            return res.status(200).json({ status: 200, token: token, message: 'Authentication successfull' });
         }
     } catch (e) {
-        throw Error("Error while sign in");
+        throw Error('Error while sign in');
     }
 };
 
 exports.updateUser = async function (req, res, next) {
     // Id is necessary for the update
     if (!req.body._id) {
-        return res.status(400).json({ status: 400., message: "Id must be present" });
+        return res.status(400).json({ status: 400., message: 'Id must be present' });
     }
 
     var id = req.body._id;
@@ -80,7 +80,7 @@ exports.updateUser = async function (req, res, next) {
 
     try {
         var updatedUser = await UserService.updateUser(user);
-        return res.status(200).json({ status: 200, data: updatedUser, message: "Successfully updated tournament" });
+        return res.status(200).json({ status: 200, data: updatedUser, message: 'Successfully updated tournament' });
     } catch (e) {
         return res.status(400).json({ status: 400., message: e.message });
     }
@@ -92,7 +92,7 @@ exports.deleteUser = async function (req, res, next) {
 
     try {
         var deleted = await UserService.deleteUser(userId);
-        return res.status(204).json({ status: 204, message: "Successfully deleted user" });
+        return res.status(204).json({ status: 204, message: 'Successfully deleted user' });
     } catch (e) {
         return res.status(403).json({ status: 403, message: e.message });
     }
@@ -102,7 +102,7 @@ exports.managerOnly = async function (req, res, next) {
     if (req.user && (req.user.role == 'manager' || req.user.role == 'admin')) {
         next();
     } else {
-        return res.status(401).json({ status: 401, message: "Unauthorized user" });
+        return res.status(401).json({ status: 401, message: 'Unauthorized user' });
     }
 };
 
@@ -110,6 +110,6 @@ exports.adminOnly = async function (req, res, next) {
     if (req.user && (req.user.role == 'admin')) {
         next();
     } else {
-        return res.status(401).json({ status: 401, message: "Unauthorized user" });
+        return res.status(401).json({ status: 401, message: 'Unauthorized user' });
     }
 };

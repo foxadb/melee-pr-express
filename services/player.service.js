@@ -67,7 +67,6 @@ exports.updatePlayer = async function (player) {
     oldPlayer.mains = player.mains != null ? player.mains : oldPlayer.mains;
     oldPlayer.location = player.location != null ? player.location : oldPlayer.location;
     oldPlayer.score = player.score != null ? player.score : oldPlayer.score;
-    oldPlayer.matches = player.matches != null ? player.matches : oldPlayer.matches;
 
     try {
         var savedPlayer = await oldPlayer.save();

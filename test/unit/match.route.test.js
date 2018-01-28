@@ -236,6 +236,23 @@ describe('Match API', function () {
             .expect(201, done);
     });
 
+    it('POST w 2 same players: should fail', function (done) {
+        let body = {
+            player1: player1Id,
+            player2: player1Id,
+            score1: 2,
+            score2: 0,
+            tournament: tournamentId
+        };
+
+        request(app)
+            .post(matchRoute)
+            .set('Authorization', token)
+            .send(body)
+            .expect('Content-Type', /json/)
+            .expect(400, done);
+    });
+
     it('PUT w/o Auth: should fail', function (done) {
         let body = {
             _id: matchId,

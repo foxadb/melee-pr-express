@@ -62,7 +62,6 @@ exports.updateTournament = async function (tournament) {
     oldTournament.location = tournament.location != null ? tournament.location : oldTournament.location;
     oldTournament.organiser = tournament.organiser != null ? tournament.organiser : oldTournament.organiser;
     oldTournament.date = tournament.date != null ? tournament.date : oldTournament.date;
-    oldTournament.matches = tournament.matches != null ? tournament.matches : oldTournament.matches;
 
     try {
         var savedTournament = await oldTournament.save();

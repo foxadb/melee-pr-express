@@ -67,8 +67,6 @@ exports.updateMatch = async function (match) {
     }
 
     // Edit the Match Object
-    oldMatch.player1 = match.player1 != null ? match.player1 : oldMatch.player1;
-    oldMatch.player2 = match.player2 != null ? match.player2 : oldMatch.player2;
     oldMatch.score1 = match.score1 != null ? match.score1 : oldMatch.score1;
     oldMatch.score2 = match.score2 != null ? match.score2 : oldMatch.score2;
     oldMatch.tournament = match.tournament != null ? match.tournament : oldMatch.tournament;

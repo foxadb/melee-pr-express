@@ -73,7 +73,6 @@ Use ``api/user`` for authentication.
     "mains": ["sheik", "ics"],
     "location": "Grenoble",
     "score": 1500,
-    "matches": [ "507f9a6e8a8z41972w4476az7" ]
 }
                 </pre>
             </td>
@@ -85,7 +84,6 @@ Use ``api/user`` for authentication.
     "mains": ["falco"],
     "location": "Lyon",
     "score": 2000,
-    "matches": [ "501w47a69a5q71979d5q417edw" ]
 }
                 </pre>
             </td>
@@ -135,8 +133,6 @@ Use ``api/user`` for authentication.
                 <pre>
 {
     "_id": "501w47a69a5q71979d5q417edw",
-    "player1": "507f9a679a87e719729a5861w15",
-    "player2": "505d8a9ze4qofp83w7a969a6",
     "score1": 2,
     "score2": 0,
     "tournament": "505d89a6e47a4w1q2w7a4a7a6"
@@ -148,9 +144,9 @@ Use ``api/user`` for authentication.
     </tbody>
 </table>
 
-POST, PUT and DELETE are restricted with authentication system.
+POST, PUT and DELETE are restricted with authentication system (need a JSON Web Token).
 
-**Be careful, ``matches`` field in the POST/PUT requests of ``api/match`` is destructive. Use it at your own risk!**
+**``matches`` field in the POST/PUT requests could be destructive. It has been disable for editing to avoid database corruption! You cannot edit ``player1`` and ``player2`` fields of a match for the same reason**
 
 #### Roles
 
