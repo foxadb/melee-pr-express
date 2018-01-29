@@ -1,6 +1,6 @@
 {
   "name": "melee-pr",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "NODE_ENV=production nodemon ./bin/www",
