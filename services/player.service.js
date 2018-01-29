@@ -141,7 +141,7 @@ exports.updateEloRank = async function (match) {
             actual = 0.5;
         }
 
-        // Elo Rank System
+        // Elo Rank System (32 is the standard multiplier)
         var eloRank = new EloRank(32);
 
         // Compute the new Elo Rank for Player 1

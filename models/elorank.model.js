@@ -13,15 +13,17 @@ class EloRank {
     }
 
     getExpected(a, b) {
-        return 1 / (1 + Math.pow(10, ((a - b) / 400)));
+        const expected = 1 / (1 + Math.pow(10, ((b - a) / 400)));
+        return expected;
     }
 
     updateRank(expected, actual, current) {
-        return Math.round(current + this.k * (actual - expected));
+        const newRank = Math.round(current + this.k * (actual - expected));
+        return newRank;
     }
 
     compareAndUpdateRank(actual, player, opponent) {
-        var expected = this.getExpected(player, opponent);
+        const expected = this.getExpected(player, opponent);
         return this.updateRank(expected, actual, player);
     }
 

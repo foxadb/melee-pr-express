@@ -4,7 +4,7 @@ const mongoosePaginate = require('mongoose-paginate');
 const PlayerSchema = new mongoose.Schema({
     name: { type: String, maxlength: 24, required: true, unique: true },
     mains: [{ type: String, maxlength: 8 }],
-    score: { type: Number, default: 1000 },
+    score: { type: Number, min: 1000, max: 3000, default: 1500 },
     location: { type: String, maxlength: 24 },
     matches: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Match' }]
 }, { usePushEach: true });
