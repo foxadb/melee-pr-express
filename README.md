@@ -22,15 +22,19 @@ The app will automatically reload if you change any of the source files.
 
 ### Testing
 
+#### Unit tests
+
 Run unit tests with ``npm run unit-tests`` using [mocha](https://mochajs.org/).
+This script create a new empty test database and drop it when all tests are completed.
+
+#### Load tests
 
 Run load tests with ``npm run load-tests`` using [artillery](https://artillery.io).
+Load tests require a launched test server as it send HTTP requests.
 
 ### API Features
 
-Send Ajax requests to http://localhost:3000/api
-
-Use ``api/user`` for authentication.
+Send HTTP requests to http://localhost:3000/api
 
 <table>
     <thead>
@@ -148,10 +152,14 @@ Use ``api/user`` for authentication.
     </tbody>
 </table>
 
-POST, PUT and DELETE are restricted with authentication system (need a JSON Web Token).
-
 **``matches`` field in the POST/PUT requests could be destructive. It has been disable for editing to avoid database corruption!**
 **You cannot edit ``player1``, ``player2`` and ``tournament`` fields of a match for the same reason**
+
+#### Authentication
+
+Use ``api/user`` route for authentication as it is required to use most of POST/PUT/DELETE requests.
+
+Authentication is based on [JSON Web Tokens](https://jwt.io). Use it as *Bearer Authentication Token* in your request header.
 
 #### HTTP request examples
 
@@ -173,7 +181,10 @@ HEADERS
 Content-Type: application/json
 
 BODY
-{ "username": "admin", "password": "password" }
+{
+    "username": "admin",
+    "password": "password"
+}
 ```
 
 Create a new player
