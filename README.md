@@ -5,8 +5,8 @@ Super Smash Bros. Melee Power Ranking REST API designed with Express.js.
 
 ### Requirements
 
-node >= 9.x
-npm >= 5.x
+- `node` >= 9.x
+- `npm` >= 5.x
 
 ### Installation
 
@@ -22,9 +22,9 @@ The app will automatically reload if you change any of the source files.
 
 ### Testing
 
-Run unit tests with ``npm run unit-test`` using [mocha](https://mochajs.org/).
+Run unit tests with ``npm run unit-tests`` using [mocha](https://mochajs.org/).
 
-Run load tests with ``npm run load-test`` using [artillery](https://artillery.io).
+Run load tests with ``npm run load-tests`` using [artillery](https://artillery.io).
 
 ### API Features
 
@@ -139,8 +139,7 @@ Use ``api/user`` for authentication.
 {
     "_id": "501w47a69a5q71979d5q417edw",
     "score1": 2,
-    "score2": 0,
-    "tournament": "505d89a6e47a4w1q2w7a4a7a6"
+    "score2": 0
 }
                 </pre>
             </td>
@@ -152,13 +151,68 @@ Use ``api/user`` for authentication.
 POST, PUT and DELETE are restricted with authentication system (need a JSON Web Token).
 
 **``matches`` field in the POST/PUT requests could be destructive. It has been disable for editing to avoid database corruption!**
-**You cannot edit ``player1`` and ``player2`` fields of a match for the same reason**
+**You cannot edit ``player1``, ``player2`` and ``tournament`` fields of a match for the same reason**
 
 #### HTTP request examples
 
-To get player id `509637a41d5q7az697d1417az5` data:
+Get player id `509637a41d5q7az697d1417az5` data
 ```
 GET http://localhost:3000/api/player/509637a41d5q7az697d1417az5
+```
+
+Get all matches data
+```
+GET http://localhost:3000/api/match
+```
+
+Sign in
+```
+POST http://localhost:3000/api/user/login
+
+HEADERS
+Content-Type: application/json
+
+BODY
+{ "username": "admin", "password": "password" }
+```
+
+Create a new player
+```
+POST http://localhost:3000/api/player
+
+HEADERS
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6I...
+Content-Type: application/json
+
+BODY
+{
+    "username": "admin",
+    "password": "password"
+}
+```
+
+Edit scores of an existing match
+```
+PUT http://localhost:3000/api/match
+
+HEADERS
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6I...
+Content-Type: application/json
+
+BODY
+{
+    "_id": "501w47a69a5q71979d5q417edw",
+    "score1": 3,
+    "score2": 1
+}
+```
+
+Delete a tournament
+```
+DELETE http://localhost:3000/api/tournament/5a6f272493605913dbd0aa3c
+
+HEADERS
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6I...
 ```
 
 #### Roles
