@@ -51,7 +51,7 @@ exports.createMatch = async function (req, res, next) {
         TournamentService.addMatch(createdMatch.tournament, createdMatch._id);
 
         // Update the Elo Ranks
-        PlayerService.updateEloRank(match);
+        PlayerService.updateEloRank(createdMatch);
 
         // Return success result
         return res.status(201).json({ status: 201, data: createdMatch, message: "Successfully created match" });
@@ -76,6 +76,10 @@ exports.updateMatch = async function (req, res, next) {
 
     try {
         var updatedMatch = await MatchService.updateMatch(match);
+
+        // Update the Elo Ranks
+        PlayerService.updateEloRank(updatedMatch);
+
         return res.status(200).json({ status: 200, data: updatedMatch, message: "Successfully updated match" });
     } catch (e) {
         return res.status(403).json({ status: 403, message: e.message });

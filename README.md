@@ -5,8 +5,14 @@ Super Smash Bros. Melee Power Ranking REST API designed with Express.js.
 
 ### Requirements
 
-- `node` >= 9.x
-- `npm` >= 5.x
+- Node.js: `node --version` >= 9.x
+- NPM: `npm --version` >= 5.x
+- MongoDB: `mongo --version` >= 3.x
+
+Start MongoDB before using the app
+```
+sudo systemctl start mongodb.service
+```
 
 ### Installation
 
@@ -234,5 +240,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6I...
 
 #### Elo Ranking System
 
-A ranking system based on [Elo](https://en.wikipedia.org/wiki/Elo_rating_system) is implemented in the Match API.
-This feature compute automaticaly new player scores when a match is submitted.
+A ranking system based on [Elo](https://en.wikipedia.org/wiki/Elo_rating_system) is implemented in the Match API. This feature compute automaticaly new player scores when a match is submitted.
