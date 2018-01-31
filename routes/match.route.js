@@ -10,6 +10,8 @@ router.get('/:id', MatchController.getMatch);
 
 // Map POST controller functions
 router.post('/', UserController.managerOnly, MatchController.createMatch);
+
+// Map PUT controller functions
 router.put('/', UserController.managerOnly, MatchController.updateMatch);
 
 // Map DELETE controller functions

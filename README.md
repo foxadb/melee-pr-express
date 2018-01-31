@@ -240,4 +240,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6I...
 
 #### Elo Ranking System
 
-A ranking system based on [Elo](https://en.wikipedia.org/wiki/Elo_rating_system) is implemented in the Match API. This feature compute automaticaly new player scores when a match is submitted.
+A ranking system based on [Elo](https://en.wikipedia.org/wiki/Elo_rating_system) is implemented in the Tournament API.
+
+When the manager has finished to upload all match results, he can run the Elo algorithm to compute new player score.

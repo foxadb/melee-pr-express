@@ -101,3 +101,27 @@ exports.deleteTournament = async function (req, res, next) {
         return res.status(403).json({ status: 403, message: e.message });
     }
 };
+
+exports.updateRanking = async function (req, res, next) {
+    // Id is necessary for the ranking update
+    if (!req.body._id) {
+        return res.status(400).json({ status: 400, message: 'Id must be present' });
+    }
+
+    // Tournament ID
+    var id = req.body._id;
+
+    try {
+        let tournament = await TournamentService.getTournament(id);
+
+        tournament.matches.forEach(matchId => {
+            // Retreive match and update Elo ranks
+            MatchService.getMatch(matchId)
+                .then(match => PlayerService.updateEloRank(match));
+        });
+
+        return res.status(204).json({ status: 204, message: 'Successfully Elo ranks updated' });
+    } catch (e) {
+        return res.status(403).json({ status: 403, message: e.message });
+    }
+};

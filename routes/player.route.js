@@ -10,6 +10,8 @@ router.get('/:id', PlayerController.getPlayer);
 
 // Map POST controller functions
 router.post('/', UserController.managerOnly, PlayerController.createPlayer);
+
+// Map PUT controller functions
 router.put('/', UserController.managerOnly, PlayerController.updatePlayer);
 
 // Map DELETE controller functions

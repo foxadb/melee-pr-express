@@ -50,9 +50,6 @@ exports.createMatch = async function (req, res, next) {
         // Add the new match to its tournament
         TournamentService.addMatch(createdMatch.tournament, createdMatch._id);
 
-        // Update the Elo Ranks
-        PlayerService.updateEloRank(createdMatch);
-
         // Return success result
         return res.status(201).json({ status: 201, data: createdMatch, message: "Successfully created match" });
     } catch (e) {
@@ -75,11 +72,10 @@ exports.updateMatch = async function (req, res, next) {
     };
 
     try {
+        // Update the match
         var updatedMatch = await MatchService.updateMatch(match);
-
-        // Update the Elo Ranks
-        PlayerService.updateEloRank(updatedMatch);
-
+        
+        // Return success result
         return res.status(200).json({ status: 200, data: updatedMatch, message: "Successfully updated match" });
     } catch (e) {
         return res.status(403).json({ status: 403, message: e.message });
