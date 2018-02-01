@@ -17,7 +17,7 @@ exports.getMatch = async function (id) {
         var match = await Match.findById(id)
             .populate('player1', ['name', 'mains'])
             .populate('player2', ['name', 'mains'])
-            .populate('tournament', ['name']);
+            .populate('tournament', ['name', 'date']);
 
         if (match) {
             return match;
