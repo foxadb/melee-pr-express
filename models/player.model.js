@@ -9,6 +9,11 @@ const PlayerSchema = new mongoose.Schema({
     matches: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Match' }]
 }, { usePushEach: true });
 
+PlayerSchema.methods.validScore = async function () {
+    this.score = this.score < 3000 ? this.score : 3000;
+    this.score = this.score > 1000 ? this.score : 1000;
+};
+
 PlayerSchema.plugin(mongoosePaginate);
 const Player = mongoose.model('Player', PlayerSchema);
 

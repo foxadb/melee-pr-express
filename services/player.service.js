@@ -155,6 +155,10 @@ exports.updateEloRank = async function (match) {
         }
         player2.score = eloRank.compareAndUpdateRank(actual, player2.score, player1.score);
 
+        // Avoid players score pass the limits
+        player1.validScore();
+        player2.validScore();
+
         // Save into the database
         await player1.save();
         await player2.save();
